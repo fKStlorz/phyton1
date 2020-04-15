@@ -1,0 +1,24 @@
+class ViajeroFrecuente:
+    __numeroViajero=0
+    __dni=0
+    __nombre=""
+    __apellido=""
+    __millasAcum=0
+    def __init__(self,numeroViajero,dni,nb,ap,millasA):
+        self.__numeroViajero=numeroViajero
+        self.__dni=dni
+        self.__nombre=nb
+        self.__apellido=ap
+        self.__millasAcum=millasA
+    def __str__(self):
+        return ("Num. de viajero: {}, DNI: {}, nombre: {}, apellido: {}, MillasAcumuladas: {} ".format(self.__numeroViajero,self.__dni,self.__nombre,self.__apellido,self.__millasAcum))
+    def obcantidadTotaldeMillas(self):
+        return self.__millasAcum
+    def acumularMillas(self,millas):
+        self.__millasAcum+=millas
+    def canjearMillas(self,millascanje):
+        if millascanje<=self.__millasAcum:
+            self.__millasAcum-=millascanje
+            print("\n-----Millas canjeadas------\n")
+        else:
+            print("\n------Error al realizar la operación-------\n")
