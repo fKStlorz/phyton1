@@ -1,36 +1,25 @@
 import csv
-class ViajeroFrecuente:
-    __numeroViajero=0
-    __dni=0
-    __nombre=""
-    __apellido=""
-    __millasAcum=0
-    def __init__(self,numeroViajero,dni,nb,ap,millasA):
-        self.__numeroViajero=numeroViajero
-        self.__dni=dni
-        self.__nombre=nb
-        self.__apellido=ap
-        self.__millasAcum=millasA
-    def __str__(self):
-        return ("Num. de viajero: {}, DNI: {}, nombre: {}, apellido: {}, MillasAcumuladas: {} ".format(self.__numeroViajero,self.__dni,self.__nombre,self.__apellido,self.__millasAcum))
-    def obcantidadTotaldeMillas(self):
-        return self.__millasAcum
-    def acumularMillas(self,millas):
-        self.__millasAcum=millas+self.__millasAcum
-    def canjearMillas(self,millascanje):
-        if millascanje<=self.__millasAcum:
-            self.__millasAcum=millascanje
-            print("\n-----Millas canjeadas------\n")
-        else:
-            print("\n------Error al realizar la operación-------\n")
+from ClaseViajeroFrecuente import ViajeroFrecuente
+
+def testing():
+    objeto1=ViajeroFrecuente(2,55,"juan","perez","test")
+    objeto2=ViajeroFrecuente("test",60,34,55,"test")
+    objeto3=ViajeroFrecuente(3,10,"test","test","test")
+    print("{}\n".format(objeto1))
+    print("{}".format(objeto1.obcantidadTotaldeMillas()))
+
 
 if __name__=="__main__":
     listaViajeros=[]
-    opcion=1
+    opcion=int(input("Desea entrar en modo Testing? 1-Si, cualquier otro numero, no:    "))
+    if opcion==1:
+        testing()
+    else:
+        opcion=0
     archivo=open("ViajeroFrecuente.csv")
     reader=csv.reader(archivo,delimiter=";")
     for fila in reader:
-        Viajero=ViajeroFrecuente(fila[0],fila[1],fila[2],fila[3],fila[4])
+        Viajero=ViajeroFrecuente(int(fila[0]),int(fila[1]),str(fila[2]),str(fila[3]),int(fila[4]))
         listaViajeros.append(Viajero)
     for i in range(len(listaViajeros)):
         print(listaViajeros[i])
@@ -42,14 +31,13 @@ if __name__=="__main__":
             print("2- Acumular millas")
             print("3- Canjear millas")
             opcion=int(input("4- Salir \n"))
+            print("-------------------------------------------")
             if (opcion==1):
-                print("\n\n{}\n\n".format(listaViajeros[num-1].obcantidadTotaldeMillas()))
+                print("\n{}\n".format(listaViajeros[num-1].obcantidadTotaldeMillas()))
             elif (opcion==2):
-                millas=int(input("Ingrese millas nuevas para acumularlas   "))
+                millas=int(input("Ingrese millas nuevas para acumularlas:   "))
                 listaViajeros[num-1].acumularMillas(millas)
             elif (opcion==3):
-                millas=int(input("Ingrese millas a canjear   "))
+                millas=int(input("Ingrese millas a canjear:   "))
                 listaViajeros[num-1].canjearMillas(millas)
-            else:
-                num = input("Ingrese número de viajero para obtener información, si desea salir escriba 0:  ")
-    print("termino")
+        num = int(input("Ingrese nuevo número de viajero para obtener información, si desea salir escriba 0:  "))
