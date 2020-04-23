@@ -1,0 +1,33 @@
+class Alumno:
+    totalClases = 20
+    maxInasistencias = 5
+    __nombre = ""
+    __año = 0
+    __division = ""
+    __cantInasistencias = 0
+
+    def __init__(self, nb, año, division, inasistencias):
+        self.__nombre = nb
+        self.__año = año
+        self.__division = division
+        self.__cantInasistencias = inasistencias
+
+    @classmethod
+    def getMaxInasistencias(cls):
+        return cls.maxInasistencias
+
+    @classmethod
+    def getTotalClases(cls):
+        return cls.totalClases
+
+    def getNombre(self):
+        return self.__nombre
+
+    def getInasistencias(self):
+        return self.__cantInasistencias
+
+    def getAño(self):
+        return self.__año
+
+    def getDivision(self):
+        return self.__division
