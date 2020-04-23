@@ -1,0 +1,45 @@
+from ManejadorAlumnos import ManejadorAlumno
+from Alumno import Alumno
+
+def opcion1(manejador):
+    año=int(input("\nIngrese año: "))
+    division=input("Ingrese division: ")
+    lista=manejador.getLista()
+    print ("\nAlumno       Porcentaje")
+    for Alumno in lista:
+        if Alumno.getAño() == año:
+            if Alumno.getDivision() == division:
+                if Alumno.getMaxInasistencias() < Alumno.getInasistencias():
+                    print ("{}        {}%\n".format(Alumno.getNombre(),(Alumno.getInasistencias()*100)/Alumno.getTotalClases()))
+    input()
+def opcion2(manejador):
+    nuevacant=int(input("\nIngrese la nueva cantidad de inasistencias permitidas: "))
+    Alumno.maxInasistencias = nuevacant
+    print ("\n------ Cambio realizado ----------")
+    input()
+
+def opcion3(manejador):
+    print ("Finaliza el programa")
+
+switcher = {
+    1: opcion1,
+    2: opcion2,
+    3: opcion3
+}
+def menu(opcion,manejador):
+    func = switcher.get(opcion, lambda: print("Opcion incorrecta"))
+    func(manejador)
+
+if __name__=="__main__":
+    manejador=ManejadorAlumno()
+    manejador.mainManejador()
+    r=False
+    while not r:
+        print ("----------------Menu de opciones-------------------")
+        print ("1-Listar nombre y porcentaje")
+        print ("2-Modificar la cantidad de inasistencias permitidas")
+        print ("3-Salir")
+        print ("---------------------------------------------------")
+        opcion=int(input("Ingrese una de las opciones: "))
+        menu(opcion,manejador)
+        r= opcion==3
