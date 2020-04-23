@@ -1,0 +1,20 @@
+from Alumno import Alumno
+import csv
+class ManejadorAlumno:
+    __listaAlumnos=[]
+
+    def __init__(self):
+        self.__listaAlumnos=[]
+
+    def agregarAlumno(self,alumno):
+        self.__listaAlumnos.append(alumno)
+
+    def getLista(self):
+        return self.__listaAlumnos
+
+    def mainManejador(self):
+        archivo=open("alumnos.csv")
+        reader=csv.reader(archivo,delimiter=";")
+        for fila in reader:
+            alumno=Alumno(fila[0],int(fila[1]),fila[2],int(fila[3]))
+            self.agregarAlumno(alumno)
