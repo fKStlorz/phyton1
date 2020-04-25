@@ -1,0 +1,87 @@
+class FechaHora:
+    __dia = 0
+    __mes = 0
+    __año = 0
+    __hora = 0
+    __minuto = 0
+    __segundo = 0
+    def __init__(self, dia=1, mes=1, año=2020, hora=0, minuto=0, segundo=0):
+        self.__dia = dia
+        self.__mes = mes
+        self.__año = año
+        self.__hora = hora
+        self.__minuto = minuto
+        self.__segundo = segundo
+
+    def __str__(self):
+        return ("La hora es: {} h {} m {} s".format(self.__hora,self.__minuto,self.__segundo))
+
+    def getHora(self):
+        return self.__hora
+
+    def getMinuto(self):
+        return self.__minuto
+
+    def getSegundo(self):
+        return self.__segundo
+
+    def __add__(self,otraHora):
+        suma = FechaHora(1,1,2020,self.__hora+otraHora.getHora(),self.__minuto+otraHora.getMinuto(),self.__segundo+otraHora.getSegundo())
+        suma.AdelantarHora()
+        return suma
+
+    def __sub__(self,otraHora):
+        resta = FechaHora(1, 1, 2020, self.__hora - otraHora.getHora(), self.__minuto - otraHora.getMinuto(),self.__segundo - otraHora.getSegundo())
+        resta.AdelantarHora()
+        return resta
+
+    def __gt__(self,otraHora):
+        if self.__hora > otraHora.getHora():
+            return 1
+        elif self.__hora < otraHora.getHora():
+            return 2
+        elif self.__minuto > otraHora.getMinuto():
+            return 1
+        elif self.__minuto < otraHora.getMinuto():
+            return 2
+        elif self.__segundo > otraHora.getSegundo():
+            return 1
+        elif self.__segundo < otraHora.getSegundo():
+            return 2
+        else:
+            return 3
+
+    def Mostrar(self):
+        print("Es la fecha {}/{}/{} y la hora es {}h {}m {}s".format(self.__dia, self.__mes, self.__año, self.__hora, self.__minuto, self.__segundo))
+
+    def PonerEnHora(self,hora=0,minuto=0,segundo=0):
+        self.__hora = hora
+        self.__minuto = minuto
+        self.__segundo = segundo
+
+    def AnalizarBisiesto(self):
+        if self.__año%4 == 0:
+            if self.__año%100 != 0:
+                self.__dia += 1
+            elif self.__año%400 == 0:
+                self.dia += 1
+    def AdelantarHora(self,hora=0,minuto=0,segundo=0):
+        self.AnalizarBisiesto()
+        self.__hora += hora
+        self.__minuto += minuto
+        self.__segundo += segundo
+        while 60 <= self.__segundo:
+            self.__segundo -= 60
+            self.__minuto += 1
+        while 60 <= self.__minuto:
+            self.__minuto -= 60
+            self.__hora += 1
+        while 24 <= self.__hora:
+            self.__hora -= 24
+            self.__dia += 1
+        while 30 < self.__dia:
+            self.__dia -= 30
+            self.__mes += 1
+        while 12 < self.__mes:
+            self.__mes -= 12
+            self.__año += 1
