@@ -1,0 +1,82 @@
+from FechaHora import FechaHora
+
+
+def opcion1suma(h1, h2):
+    print("Primer objeto: {}".format(h1))
+    print("Segundo objeto: {}".format(h2))
+    suma = h1 + h2
+    print("\nSuma: {}".format(suma))
+    input()
+
+def opcion2resta(h1, h2):
+    print("Primer objeto: {}".format(h1))
+    print("Segundo objeto: {}".format(h2))
+    resta = h1 - h2
+    print("\nResta: {}".format(resta))
+    input()
+
+def opcion3compara(h1, h2):
+    print("Primer objeto: {}".format(h1))
+    print("Segundo objeto: {}".format(h2))
+    compara = h1 > h2
+    if compara==1:
+        print ("\nEl primer objeto es mayor")
+    elif compara==2:
+        print("\nEl segundo objeto es mayor")
+    else:
+        print("\nAmbos horarios son iguales")
+    input()
+
+def opcion4salir(h1, h2):
+    print("Finaliza el programa")
+
+
+switcher = {
+    1:opcion1suma,
+    2:opcion2resta,
+    3:opcion3compara,
+    4:opcion4salir
+}
+def menu(op, h1, h2):
+    func = switcher.get(op, lambda: print("Opcion incorrecta"))
+    func(h1, h2)
+
+
+if __name__ == "__main__":
+    hora = int(input("Ingrese hora del primer objeto:  "))
+    while hora < 0 or hora > 23:
+        print("Numero mal ingreado de hora (0-24)")
+        hora = int(input("Ingrese hora del primer objeto:  "))
+    minuto = int(input("Ingrese minutos del primer objeto:  "))
+    while minuto < 0 or minuto > 59:
+        print("Numero mal ingreado de minuto (0-60)")
+        minuto = int(input("Ingrese minuto del primer objeto:  "))
+    segundo = int(input("Ingrese segundos del primer objeto:  "))
+    while segundo < 0 or segundo > 59:
+        print("Numero mal ingreado de segundo (0-60)")
+        segundo = int(input("Ingrese segundo del primer objeto:  "))
+    hora1 = FechaHora(1, 1, 2020, hora, minuto, segundo)
+    hora = int(input("Ingrese hora del segundo objeto:  "))
+    while hora < 0 or hora > 23:
+        print("Numero mal ingreado de hora (0-24)")
+        hora = int(input("Ingrese hora del segundo objeto:  "))
+    minuto = int(input("Ingrese minutos del segundo objeto:  "))
+    while minuto < 0 or minuto > 59:
+        print("Numero mal ingreado de minuto (0-60)")
+        minuto = int(input("Ingrese minuto del segundo objeto:  "))
+    segundo = int(input("Ingrese segundos del segundo objeto:  "))
+    while segundo < 0 or segundo > 59:
+        print("Numero mal ingreado de segundo (0-60)")
+        segundo = int(input("Ingrese segundos del segundo objeto:  "))
+    hora2 = FechaHora(1, 1, 2020, hora, minuto, segundo)
+    r = False
+    while not r:
+        print("--------------Menu de opciones--------------")
+        print("1-Sumar dos horas")
+        print("2-Restar dos horas")
+        print("3-Distinguir cuál de las dos horas es mayor")
+        print("4-Salir")
+        print("--------------------------------------------")
+        opcion = int(input("Ingrese una de las opciones:  "))
+        menu(opcion, hora1, hora2)
+        r = opcion == 4
