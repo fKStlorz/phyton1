@@ -1,0 +1,32 @@
+from FechaHora import FechaHora
+
+class Hora:
+    __hora=0
+    __minuto=0
+    __segundo=0
+    def __init__(self,h,m,s):
+        self.__hora=h
+        self.__minuto=m
+        self.__segundo=s
+
+    def getHora(self):
+        return self.__hora
+
+    def getMinuto(self):
+        return self.__minuto
+
+    def getSegundo(self):
+        return self.__segundo
+
+    def Mostrar(self):
+        print("La hora es: {}h {}m {}s".format(self.__hora,self.__minuto,self.__segundo))
+
+    def __radd__(self,otraHora):
+        f2 = FechaHora(otraHora.getDia(),otraHora.getMes(),otraHora.getAño(),self.__hora+otraHora.getHora(),self.__minuto+otraHora.getMinuto(),self.__segundo+otraHora.getSegundo())
+        f2.AdelantarHora()
+        return f2
+
+    def __add__(self,otraHora):
+        f3 = FechaHora(otraHora.getDia(),otraHora.getMes(),otraHora.getAño(),self.__hora+otraHora.getHora(),self.__minuto+otraHora.getMinuto(),self.__segundo+otraHora.getSegundo())
+        f3.AdelantarHora()
+        return f3
