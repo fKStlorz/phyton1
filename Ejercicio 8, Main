@@ -1,0 +1,56 @@
+from Conjunto import Conjunto
+
+def opcion1(C1,C2):
+    Union = C1 + C2
+    print("--------------------------------------------------------")
+    print("La union de los dos conjuntos es el conjunto resultante: \n{}".format(Union))
+    print("--------------------------------------------------------\n")
+    input()
+
+def opcion2(C1,C2):
+    Diferencia = C1 - C2
+    print("-------------------------------------------------------------")
+    print("La diferencia de los dos conjuntos es el conjunto resultante: \n{}".format(Diferencia))
+    print("-------------------------------------------------------------\n")
+    input()
+
+def opcion3(C1,C2):
+    Igualdad = C1 == C2
+    if Igualdad:
+        print ("\nAmbos conjuntos son iguales\n")
+    else:
+        print("\nLos dos conjuntos son distintos\n")
+    input()
+
+def opcion4(C1,C2):
+    print ("Finaliza el programa")
+
+switcher = {
+    1: opcion1,
+    2: opcion2,
+    3: opcion3,
+    4: opcion4
+}
+
+def menu(op,C1,C2):
+    func = switcher.get(op, lambda: print("Opcion incorrecta"))
+    func(C1, C2)
+
+if __name__=="__main__":
+    Conjunto1 = Conjunto()
+    Conjunto2 = Conjunto()
+    print("Ingrese valores para llenar el 1° conjunto, finalize con 0")
+    Conjunto1.MainConjunto()
+    print("Ingrese valores para llenar el 2° conjunto, finalize con 0")
+    Conjunto2.MainConjunto()
+    r = False
+    while not r:
+        print("--------------Menu de opciones--------------")
+        print("1- Union de los dos conjuntos")
+        print("2- Diferencia de los dos conjuntos")
+        print("3- Verificar igualdad de los dos conjuntos")
+        print("4- Salir")
+        print("---------------------------------------------")
+        opcion = int(input("Ingrese la opcion:  "))
+        menu(opcion,Conjunto1,Conjunto2)
+        r = opcion == 4
