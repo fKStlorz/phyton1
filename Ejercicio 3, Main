@@ -1,0 +1,45 @@
+from ManejadorCamiones import ManejadorCamiones
+from cosecha import cosecha
+
+def opcion1(manjcam,manjcos):
+    cam = int(input("Ingrese número del camion a revisar\n"))
+    lista=manjcos.getCamionCosecha(cam)
+    suma = 0
+    for i in lista:
+        suma += i
+    print ("Tiene un total de {} kilos descargados\n".format(suma))
+
+def opcion2(manjcam,manjcos):
+    dia = int(input("Ingrese dia a revisar:  "))
+    print("\nPATENTE           CONDUCTOR          CANT. DE KILOS")
+    for i in range(len(manjcam.getCamiones())):
+        print("{}                  {}                {}".format(manjcam.getCamion(i).getPatente(),manjcam.getCamion(i).getNombre(),manjcos.getCosechaDia(i,dia)-manjcam.getCamion(i).getTara()))
+
+def opcion3(manjcam,manjcos):
+    print("Finaliza el programa")
+
+switcher = {
+    1:opcion1,
+    2:opcion2,
+    3:opcion3
+}
+
+def menu(op,manjcam,manjcos):
+    func = switcher.get(op,lambda: print("Opcion incorrecta"))
+    func(manjcam,manjcos)
+
+if __name__=="__main__":
+    Manjcam=ManejadorCamiones()
+    Manjcos=cosecha()
+    Manjcam.manejadorcamion()
+    Manjcos.manejadorcosecha()
+    r = False
+    while not r:
+        print("--------------Menu de opciones-------------")
+        print("1-Kilos descargados de un camión ingresado")
+        print("2-Mostrar listado")
+        print("3-Salir")
+        print("-------------------------------------------")
+        op = int(input("Ingrese aquí la opcion:  "))
+        menu(op,Manjcam,Manjcos)
+        r = op == 3
