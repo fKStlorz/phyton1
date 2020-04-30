@@ -1,0 +1,21 @@
+class Email:
+    __idcuenta=""
+    __dominio=""
+    __tipoDom=""
+    __contraseña=""
+
+    def __init__(self,idc,dom,tipodom,contraseña):
+        self.__idcuenta = idc
+        self.__dominio = dom
+        self.__tipoDom = tipodom
+        self.__contraseña = contraseña
+
+    def __str__(self):
+        return ("{}@{}.{}".format(self.__idcuenta,self.__dominio,self.__tipoDom))
+
+    def cambiarContraseña(self,contra):
+        if self.__contraseña == contra:
+            contra=input("Contraseña correcta, coloque la nueva contraseña:  ")
+            self.__contraseña = contra
+        else:
+            print("Error, contraseña incorrecta")
