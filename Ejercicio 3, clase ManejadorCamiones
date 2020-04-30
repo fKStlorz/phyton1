@@ -1,0 +1,32 @@
+from camion import camion
+import csv
+
+class ManejadorCamiones:
+    __listaCamiones = []
+
+    def __init__(self):
+        self.__listaCamiones = []
+
+    def agregarCamion(self, camion):
+        self.__listaCamiones.append(camion)
+
+    def getCamion(self,num):
+        return self.__listaCamiones[num]
+
+    def getCamiones(self):
+        return self.__listaCamiones
+
+    def getLista(self):
+        return self.__listaCamiones
+
+    def mostrar(self):
+        for camion in self.__listaCamiones:
+            camion.mostrardatos()
+
+    def manejadorcamion(self):
+        archivo = open("camiones.csv")
+        reader = csv.reader(archivo, delimiter=";")
+        for fila in reader:
+            Camion = camion(fila[0], fila[1], fila[2], fila[3], int(fila[4]))
+            self.agregarCamion(Camion)
+        self.mostrar()
