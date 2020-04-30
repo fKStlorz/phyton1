@@ -1,0 +1,19 @@
+import re
+from Email import Email
+
+class ManejadorEmail:
+    __email=""
+
+    def __init__(self,email1):
+        self.__email=email1
+
+    def crearCuenta(self):
+        if re.match('^[(a-z0-9\_\-\.)]+@[(a-z0-9\_\-\.)]+\.[(a-z)]{2,15}$', self.__email.lower()):
+            print("Correo ingresado correcto\n")
+            em, em1=self.__email.split("@")
+            em1,em2=em1.split(".")
+            contranueva=input("Ingrese nueva contraseña:  ")
+            nuevo = Email(em,em1,em2,contranueva)
+            return nuevo
+        else:
+            print("\nCorreo incorrecto\n")
