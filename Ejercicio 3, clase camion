@@ -1,0 +1,28 @@
+class camion:
+    __id = 0
+    __nombre = ""
+    __patente = ""
+    __marca = ""
+    __tara = 0
+
+    def __init__(self, id, nb, patente, marca, tara):
+        self.__id = id
+        self.__nombre = nb
+        self.__patente = patente
+        self.__marca = marca
+        self.__tara = tara
+
+    def mostrardatos(self):
+        print("{} {} {} {} {} ".format(self.__id, self.__nombre, self.__patente, self.__marca, self.__tara))
+
+    def getNombre(self):
+        return self.__nombre
+
+    def getPatente(self):
+        return self.__patente
+
+    def getMarca(self):
+        return self.__marca
+
+    def getTara(self):
+        return self.__tara
