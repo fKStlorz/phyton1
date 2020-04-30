@@ -1,0 +1,24 @@
+import csv
+
+class cosecha:
+    __listaCosecha = []
+
+    def __init__(self):
+        self.__listaCosecha = []
+
+    def agregarCosecha(self, cos):
+        self.__listaCosecha.append(cos)
+
+    def getCosechaDia(self,cam,dia):
+        return self.__listaCosecha[cam][dia]
+
+    def getCosechaCamion(self, cam):
+        return self.__listaCosecha[cam]
+
+    def manejadorcosecha(self):
+        archivo = open("cosecha.csv")
+        reader = csv.reader(archivo, delimiter=";")
+        for fila in reader:
+            cos = cosecha(int(fila[0]), int(fila[1]), int(fila[2]), int(fila[3]),int(fila[4]),int(fila[5]),int(fila[6]),int(fila[7]),int(fila[8]))
+            self.agregarCosecha(cos)
+        
