@@ -1,19 +1,31 @@
-import re
 from Email import Email
+import csv
 
 class ManejadorEmail:
-    __email=""
+    __listaemails = []
 
-    def __init__(self,email1):
-        self.__email=email1
+    def __init__(self):
+        self.__listaemails = []
 
-    def crearCuenta(self):
-        if re.match('^[(a-z0-9\_\-\.)]+@[(a-z0-9\_\-\.)]+\.[(a-z)]{2,15}$', self.__email.lower()):
-            print("Correo ingresado correcto\n")
-            em, em1=self.__email.split("@")
-            em1,em2=em1.split(".")
-            contranueva=input("Ingrese nueva contraseña:  ")
-            nuevo = Email(em,em1,em2,contranueva)
-            return nuevo
+    def agregarEmail(self,email):
+        self.__listaemails.append(email)
+
+    def buscarDominio(self):
+        dombusca = input("Ingrese un dominio a buscar:  ")
+        c = 0
+        for Email in self.__listaemails:
+            if Email.getDominio() == dombusca:
+                c += 1
+        if c == 0:
+            print("No hubo ningun email con ese dominio")
         else:
-            print("\nCorreo incorrecto\n")
+            print("Hubo {} emails con el dominio {}".format(c, dombusca))
+
+    def testManejador(self):
+        archivo = open("emails.csv")
+        reader = csv.reader(archivo, delimiter=';')
+        objeto=Email()
+        for fila in reader:
+            nuevo = objeto.crearCuenta(fila[0])
+            self.agregarEmail(nuevo)
+        self.buscarDominio()
