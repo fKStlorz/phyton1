@@ -1,32 +1,20 @@
 from Email import Email
 from ManejadorEmail import ManejadorEmail
-import csv
 
-if __name__=="__main__":
+if __name__ == "__main__":
     id = input("Ingrese id de la cuenta:  ")
     nombre = input("Ingrese nombre:  ")
     dominio = input("Ingrese dominio de la cuenta:  ")
     tipodom = input("Ingrese tipo de dominio de la cuenta:  ")
     contraseña = input("Ingrese contraseña de la cuenta:  ")
-    mail = Email(id,dominio,tipodom,contraseña)
-    print ("\nEstimado {} te enviaremos tus mensajes a la dirección {}\n".format(nombre,mail.__str__()))
-    contra=input("Desea cambiar la contraseña? Si - No\n")
-    if contra=="Si":
-        nueva=input("Ingrese la contraseña antigua:  ")
+    mail = Email(id, dominio, tipodom, contraseña)
+    print("\nEstimado {} te enviaremos tus mensajes a la dirección {}\n".format(nombre, mail.__str__()))
+    contra = input("Desea cambiar la contraseña? Si - No\n")
+    if contra.lower() == "si":
+        nueva = input("Ingrese la contraseña antigua:  ")
         mail.cambiarContraseña(nueva)
-    email=input("Ingrese un mail para convertirlo en objeto Email:\n")
-    objeto = ManejadorEmail(email)
-    nuevoemail = objeto.crearCuenta()
-    dombusca = input("Ingrese un dominio para ver cantidad del mismo:  ")
-    c = 0
-    archivo = open("archivos.csv")
-    reader = csv.reader(archivo, delimiter=';')
-    for fila in reader:
-        if fila[1] == dombusca:
-            c += 1
-    if c != 0:
-        print("Hay {} emails con ese dominio", c)
-    else:
-        print("No hay emails con ese dominio")
-    archivo.close()
-
+    email = input("Ingrese un mail para convertirlo en objeto Email:\n")
+    objeto = Email()
+    Emailnuevo = objeto.crearCuenta(email)
+    objeto = ManejadorEmail()
+    objeto.testManejador()
