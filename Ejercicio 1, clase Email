@@ -1,21 +1,38 @@
-class Email:
-    __idcuenta=""
-    __dominio=""
-    __tipoDom=""
-    __contraseña=""
+import re
 
-    def __init__(self,idc,dom,tipodom,contraseña):
+class Email:
+    __idcuenta = ""
+    __dominio = ""
+    __tipoDom = ""
+    __contraseña = ""
+
+    def __init__(self, idc="", dom="", tipodom="", contraseña=""):
         self.__idcuenta = idc
         self.__dominio = dom
         self.__tipoDom = tipodom
         self.__contraseña = contraseña
 
     def __str__(self):
-        return ("{}@{}.{}".format(self.__idcuenta,self.__dominio,self.__tipoDom))
+        return ("{}@{}.{}".format(self.__idcuenta, self.__dominio, self.__tipoDom))
 
-    def cambiarContraseña(self,contra):
+    def cambiarContraseña(self, contra):
         if self.__contraseña == contra:
-            contra=input("Contraseña correcta, coloque la nueva contraseña:  ")
+            contra = input("Contraseña correcta, coloque la nueva contraseña:  ")
             self.__contraseña = contra
         else:
             print("Error, contraseña incorrecta")
+
+    def getDominio(self):
+        return self.__dominio
+
+    def crearCuenta(self,email):
+        if re.match('^[(a-z0-9\_\-\.)]+@[(a-z0-9\_\-\.)]+\.[(a-z)]{2,15}$', email.lower()):
+            print("Correo ingresado correcto\n")
+            em, em1 = email.split("@")
+            em1, em2 = em1.split(".")
+            contranueva = input("Ingrese nueva contraseña:  ")
+            nuevo = Email(em, em1, em2, contranueva)
+            print("Objeto email creado correctamente\n")
+            return nuevo
+        else:
+            print("\nCorreo incorrecto\n")
