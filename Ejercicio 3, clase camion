@@ -15,6 +15,9 @@ class camion:
     def mostrardatos(self):
         print("{} {} {} {} {} ".format(self.__id, self.__nombre, self.__patente, self.__marca, self.__tara))
 
+    def getId(self):
+        return int(self.__id)
+
     def getNombre(self):
         return self.__nombre
 
@@ -25,4 +28,4 @@ class camion:
         return self.__marca
 
     def getTara(self):
-        return self.__tara
+        return int(self.__tara)
