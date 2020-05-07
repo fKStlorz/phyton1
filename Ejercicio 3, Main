@@ -1,36 +1,47 @@
 from ManejadorCamiones import ManejadorCamiones
 from cosecha import cosecha
 
-def opcion1(manjcam,manjcos):
-    cam = int(input("Ingrese número del camion a revisar\n"))
-    lista=manjcos.getCamionCosecha(cam)
-    suma = 0
+
+def opcion1(manjcam, manjcos):
+    idbusca = int(input("\nIngrese ID del camion:  "))
+    cam = manjcam.getCamion(idbusca)
+    if cam is None:
+        print("\nNo se encontró el camion ingresado\n")
+    else:
+        total = manjcos.getCosechaCamion(idbusca, cam.getTara())
+        if total == 0:
+            print("\nEl camion ingresado no tiene cargas hechas\n")
+        else:
+            print("\nEl camion id {} transportó un total de {} kilos\n".format(idbusca, total))
+
+
+def opcion2(manjcam, manjcos):
+    dia = int(input("Ingrese dia:  "))
+    print("PATENTE            CONDUCTOR            CANTIDAD DE KILOS")
+    lista = manjcos.getCosechaDia(dia)
     for i in lista:
-        suma += i
-    print ("Tiene un total de {} kilos descargados\n".format(suma))
+        cam = manjcam.getCamion(i.getId())
+        print("{}               {}                 {}".format(cam.getPatente(), cam.getNombre(), i.getPeso() - cam.getTara()))
 
-def opcion2(manjcam,manjcos):
-    dia = int(input("Ingrese dia a revisar:  "))
-    print("\nPATENTE           CONDUCTOR          CANT. DE KILOS")
-    for i in range(len(manjcam.getCamiones())):
-        print("{}                  {}                {}".format(manjcam.getCamion(i).getPatente(),manjcam.getCamion(i).getNombre(),manjcos.getCosechaDia(i,dia)-manjcam.getCamion(i).getTara()))
-
-def opcion3(manjcam,manjcos):
+def opcion3(manjcam, manjcos):
     print("Finaliza el programa")
 
+
 switcher = {
-    1:opcion1,
-    2:opcion2,
-    3:opcion3
+    1: opcion1,
+    2: opcion2,
+    3: opcion3
 }
 
-def menu(op,manjcam,manjcos):
-    func = switcher.get(op,lambda: print("Opcion incorrecta"))
-    func(manjcam,manjcos)
 
-if __name__=="__main__":
-    Manjcam=ManejadorCamiones()
-    Manjcos=cosecha()
+def menu(op, manjcam, manjcos):
+    func = switcher.get(op, lambda: print("Opcion incorrecta"))
+    func(manjcam, manjcos)
+
+
+if __name__ == "__main__":
+    Manjcam = ManejadorCamiones()
+    Manjcos = cosecha()
     Manjcam.manejadorcamion()
     Manjcos.manejadorcosecha()
     r = False
@@ -41,5 +52,5 @@ if __name__=="__main__":
         print("3-Salir")
         print("-------------------------------------------")
         op = int(input("Ingrese aquí la opcion:  "))
-        menu(op,Manjcam,Manjcos)
+        menu(op, Manjcam, Manjcos)
         r = op == 3
