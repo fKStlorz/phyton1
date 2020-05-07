@@ -1,4 +1,5 @@
 import csv
+from cosechaIngreso import cosechaingreso
 
 class cosecha:
     __listaCosecha = []
@@ -9,16 +10,28 @@ class cosecha:
     def agregarCosecha(self, cos):
         self.__listaCosecha.append(cos)
 
-    def getCosechaDia(self,cam,dia):
-        return self.__listaCosecha[cam][dia]
 
-    def getCosechaCamion(self, cam):
-        return self.__listaCosecha[cam]
+    def getCosechaDia(self,dia):
+        lista = []
+        for i in self.__listaCosecha:
+            if i.getDia() == dia:
+                lista.append(i)
+        return lista
+
+    def getCosechaCamion(self, cam, tara):
+        acum = 0
+        for i in self.__listaCosecha:
+            if i.getId() == cam:
+                acum += i.getPeso() - tara
+        return acum
+    def mostrar(self):
+        for i in self.__listaCosecha:
+            print(i.getDia())
 
     def manejadorcosecha(self):
         archivo = open("cosecha.csv")
         reader = csv.reader(archivo, delimiter=";")
         for fila in reader:
-            cos = cosecha(int(fila[0]), int(fila[1]), int(fila[2]), int(fila[3]),int(fila[4]),int(fila[5]),int(fila[6]),int(fila[7]),int(fila[8]))
+            cos = cosechaingreso(int(fila[0]),int(fila[1]),int(fila[2]))
             self.agregarCosecha(cos)
-        
+
