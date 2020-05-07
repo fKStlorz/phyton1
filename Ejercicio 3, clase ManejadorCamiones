@@ -11,7 +11,10 @@ class ManejadorCamiones:
         self.__listaCamiones.append(camion)
 
     def getCamion(self,num):
-        return self.__listaCamiones[num]
+        if num <= 0 or num > len(self.__listaCamiones):
+            return None
+        else:
+            return self.__listaCamiones[num-1]
 
     def getCamiones(self):
         return self.__listaCamiones
@@ -27,6 +30,5 @@ class ManejadorCamiones:
         archivo = open("camiones.csv")
         reader = csv.reader(archivo, delimiter=";")
         for fila in reader:
-            Camion = camion(fila[0], fila[1], fila[2], fila[3], int(fila[4]))
+            Camion = camion(fila[0], fila[1], fila[2],fila[3],int(fila[4]))
             self.agregarCamion(Camion)
-        self.mostrar()
