@@ -1,0 +1,16 @@
+from ManejaLibros import ManejaLibros
+from Menu import Menu
+
+if __name__ == "__main__":
+    manejalibro = ManejaLibros()
+    manejalibro.testlibros()
+    menu = Menu()
+    salir = False
+    while not salir:
+        print("       -----         Menu          ----          ")
+        print("1 - Dado indentificador de libro, mostrar datos")
+        print("2 - Dada palabra, identificar titulo y autor")
+        print("3 - Salir")
+        op = int(input('Ingrese una opcion: '))
+        menu.opcion(op,manejalibro)
+        salir = op == 3
