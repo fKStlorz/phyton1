@@ -1,0 +1,72 @@
+import csv
+from Libro import Libro
+from Capitulo import Capitulo
+
+
+class ManejaLibros:
+    __listaLibros = []
+
+    def __init__(self):
+        self.__listaLibros = []
+
+    def agregarLibro(self, libro):
+        self.__listaLibros.append(libro)
+
+    def mostrar(self):
+        for i in self.__listaLibros:
+            i.__str__()
+
+    def buscaLibro(self, id):
+        acum = 0
+        band = True
+        for i in self.__listaLibros:
+            if i.getId() == id:
+                band = False
+                print("Titulo del libro: {}".format(i.getTitulo()))
+                for j in i.getCapitulos():
+                    print("Nombre capitulo: {}".format(j.getTitulo()))
+                    acum = acum + j.getPaginas()
+                print("Hay un total de {} paginas\n".format(acum))
+        if band:
+            print("\nNo existe libro con ese ID\n")
+
+    def buscaPalabra(self,pa):
+        band = False
+        for i in self.__listaLibros:
+            ver = i.getTitulo().lower().split(pa)
+            if ver[0] != i.getTitulo().lower():
+                band = True
+                print("\nTitulo: '{}' , autor: '{}' , se encontró la palabra\n".format(i.getTitulo(),i.getAutor()))
+            else:
+                for j in i.getCapitulos():
+                    ver = j.getTitulo().split(pa)
+                    if ver[0] != j.getTitulo().lower():
+                        print("\nEn uno de los capitulos del libro con el siguiente titulo: '{}', y autor: '{}' se "
+                              "encontro la "
+                              "palabra, siendo el titulo de éste: '{}'\n".format(i.getTitulo(),i.getAutor(),j.getTitulo()))
+                        band = True
+        if not band:
+            print("\nNo se encontró ningun titulo con esa palabra\n")
+
+    def testlibros(self):
+        listacap = []
+        archivo = open("libros.csv")
+        reader = csv.reader(archivo, delimiter=";")
+        for fila in reader:
+            if fila[4] != "":
+                id = int(fila[0])
+                titulo = fila[1]
+                autor = fila[2]
+                editorial = fila[3]
+                isbn = fila[4]
+                cantcap = int(fila[5])
+                j = cantcap
+            else:
+                if j != 0:
+                    cap = Capitulo(fila[0], int(fila[1]))
+                    listacap.append(cap)
+                    j = j - 1
+                    if j == 0:
+                        libro = Libro(id, titulo, autor, editorial, isbn, cantcap, listacap)
+                        self.agregarLibro(libro)
+                        listacap = []
