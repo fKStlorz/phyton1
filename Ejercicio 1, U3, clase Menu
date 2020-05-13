@@ -23,7 +23,7 @@ class Menu:
     def opcion2(self, ml):
         palabra = input("Ingrese la palabra, minimo de 3 caractéres:  ")
         if re.match("^[(a-z)]{3,20}$", palabra.lower()):
-            ml.buscaPalabra(palabra)
+            ml.buscaPalabra(palabra.lower())
         else:
             print("\nPalabra incorrecta")
 
