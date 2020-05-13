@@ -1,0 +1,13 @@
+class Capitulo:
+    __titulo = ""
+    __cantPaginas = 0
+
+    def __init__(self, titulo, cantpag):
+        self.__titulo = titulo
+        self.__cantPaginas = cantpag
+
+    def getTitulo(self):
+        return self.__titulo
+
+    def getPaginas(self):
+        return self.__cantPaginas
