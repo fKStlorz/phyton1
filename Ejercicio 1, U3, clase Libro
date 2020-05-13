@@ -1,0 +1,34 @@
+from Capitulo import Capitulo
+
+class Libro:
+    __idLibro = 0
+    __titulo = ""
+    __autor = ""
+    __editorial = ""
+    __isbn = ""
+    __cantCap = 0
+    __capitulo = []
+
+    def __init__(self, id, titulo, autor, editorial, isbn, cantcap, listacap):
+        self.__idLibro = id
+        self.__titulo = titulo
+        self.__autor = autor
+        self.__editorial = editorial
+        self.__isbn = isbn
+        self.__cantCap = cantcap
+        self.__capitulo = listacap
+
+    def __str__(self):
+        return print("id: {} autor: {} cantcap: {}".format(self.__idLibro,self.__autor,self.__cantCap))
+
+    def getId(self):
+        return self.__idLibro
+
+    def getTitulo(self):
+        return self.__titulo
+
+    def getAutor(self):
+        return self.__autor
+
+    def getCapitulos(self):
+        return self.__capitulo
