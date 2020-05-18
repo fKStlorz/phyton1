@@ -1,0 +1,21 @@
+from Menu import Menu
+from ManejaSabores import ManejaSabores
+from ManejaHelados import ManejaHelados
+
+if __name__ == "__main__":
+    ms = ManejaSabores()
+    ms.testSabores()
+    mh = ManejaHelados()
+    menu = Menu()
+    salir = False
+    while not salir:
+        print("                    --------         Menu          -------          ")
+        print("1 - Registrar helado vendido")
+        print("2 - Mostrar los 5 sabores mas pedidos")
+        print("3 - Ingresar un número de sabor y estimar el total de gramos vendidos.")
+        print("4 - Ingresar por teclado un tipo de helado y mostrar los sabores vendidos en ese tamaño considerando "
+              "todos los helados vendidos.")
+        print("5 - Salir")
+        op = int(input('Ingrese una opcion: '))
+        menu.opcion(op, ms, mh)
+        salir = op == 5
