@@ -1,0 +1,28 @@
+class Sabor:
+    numero = 0
+    __numero = 0
+    __nombre = ""
+    __descripcion = ""
+
+    @classmethod
+    def getNumero(cls):
+        cls.numero += 1
+        return cls.numero
+
+    def __init__(self, nombre, descripcion):
+        self.__numero = self.getNumero()
+        self.__nombre = nombre
+        self.__descripcion = descripcion
+
+    def __str__(self):
+        s = "Nombre: {} , numero: {} , descripcion: {}".format(self.__nombre,self.__numero,self.__descripcion)
+        return s
+
+    def getNombre(self):
+        return self.__nombre
+
+    def getId(self):
+        return self.__numero
+
+    def getDescripcion(self):
+        return self.__descripcion
