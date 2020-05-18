@@ -1,0 +1,55 @@
+from Sabor import Sabor
+import csv
+
+
+class ManejaSabores:
+    __listaSabores = []
+    __vendidos = 0
+
+    def __init__(self):
+        self.__listaSabores = []
+
+    def agregarSabor(self, sabor):
+        self.__listaSabores.append(sabor)
+
+    def masVendidos(self, ar):
+        cont = 0
+        maximo = 0
+        i = 0
+        band = False
+        print("Los cinco sabores mas pedidos son: ")
+        while not band and i < len(ar):
+            if ar[i] >= maximo:
+                maximo = ar[i]
+                j = i
+            if i == len(ar)-1:
+                i = 0
+                cont += 1
+                print("- {} , con {} pedido/s".format(self.__listaSabores[j].getNombre(), maximo))
+                maximo = 0
+                ar[j] = -1
+            i += 1
+            if cont == 5:
+                band = True
+
+    def getLongitud(self):
+        long = len(self.__listaSabores)
+        return long
+
+    def verificarSabor(self, sabor):
+        i = 0
+        j = None
+        band = False
+        while not band and i<len(self.__listaSabores):
+            if self.__listaSabores[i].getNombre().lower() == sabor:
+                band = True
+                j = self.__listaSabores[i]
+            i += 1
+        return j
+
+    def testSabores(self):
+        archivo = open("sabores.csv")
+        reader = csv.reader(archivo, delimiter=";")
+        for fila in reader:
+            sabor = Sabor(fila[0], fila[1])
+            self.agregarSabor(sabor)
