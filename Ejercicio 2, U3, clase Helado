@@ -1,0 +1,13 @@
+class Helado:
+    __gramos = 0
+    __sabores = []
+
+    def __init__(self, gr, sabores):
+        self.__gramos = gr
+        self.__sabores = sabores
+
+    def getGramos(self):
+        return self.__gramos
+
+    def getSabores(self):
+        return self.__sabores
