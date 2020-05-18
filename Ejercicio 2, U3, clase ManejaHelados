@@ -1,0 +1,39 @@
+from Helado import Helado
+
+class ManejaHelados:
+    __listaHelados = []
+
+    def __init__(self):
+        self.__listaHelados = []
+
+    def saboresVendidos(self, ar):
+        for i in self.__listaHelados:
+            for j in i.getSabores():
+                ar[j.getId()-1] += 1
+        return ar
+
+    def gramosVendidos(self, id):
+        acum = 0
+        for i in self.__listaHelados:
+            for j in i.getSabores():
+                if j.getId() == id:
+                    acum = acum + i.getGramos()/len(i.getSabores())
+        return acum
+
+    def saboresVendidosPorPeso(self, ar, peso):
+        band = False
+        for i in self.__listaHelados:
+            if i.getGramos() == peso:
+                band = True
+                for j in i.getSabores():
+                    if ar[j.getId()-1] == 0:
+                        print(j.getNombre())
+                        ar[j.getId()-1] = 1
+        if not band:
+            print("No hubo pedidos con ese peso")
+        input()
+
+
+    def agregaHelado(self, gr, sabores):
+        helado = Helado(gr, sabores)
+        self.__listaHelados.append(helado)
