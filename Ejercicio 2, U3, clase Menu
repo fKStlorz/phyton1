@@ -1,0 +1,87 @@
+class Menu:
+    __switcher = None
+
+    def __init__(self):
+        self.__switcher = {1: self.opcion1,
+                           2: self.opcion2,
+                           3: self.opcion3,
+                           4: self.opcion4,
+                           5: self.opcion5,
+                           }
+
+    def getSwitcher(self):
+        return self.__switcher
+
+    def opcion(self, op, ms, mh):
+        func = self.__switcher.get(op, lambda: print("Opción no válida"))
+        func(ms, mh)
+
+    def verificaGramos(self, gr):
+        gramos = [100, 150, 250, 500, 1000]
+        band = False
+        for i in range(len(gramos)):
+            if gr == gramos[i]:
+                band = True
+        return band
+
+    def creaArreglo(self, long):
+        ar = []
+        for i in range(long):
+            ar.append(0)
+        return ar
+
+    def opcion1(self, ms, mh):
+        lista = []
+        cont = 0
+        sabor = input("Ingrese sabor del helado, para finalizar escriba fin:  ")
+        while sabor.lower() != "fin":
+            if cont < 4:
+                j = ms.verificarSabor(sabor.lower())
+                if j is None:
+                    print("No se encontró el sabor escrito, ponga otro")
+                else:
+                    print("Sabor correcto")
+                    cont += 1
+                    lista.append(j)
+                sabor = input("Ingrese nuevo sabor, finalize con fin:  ")
+            else:
+                print("Ya se llegó al maximo de sabores permitidos (4), el último no fue agregado ({})".format(sabor))
+                sabor = "fin"
+        gr = int(input("Ingrese peso del helado en gramos (100,150,250,500 o 1000):  "))
+        band = self.verificaGramos(gr)
+        if band:
+            print("\nPeso correcto, finaliza el pedido")
+            mh.agregaHelado(gr, lista)
+        else:
+            print("\nPeso incorrecto")
+        input()
+
+    def opcion2(self, ms, mh):
+        long = ms.getLongitud()
+        ar = self.creaArreglo(long)
+        ar = mh.saboresVendidos(ar)
+        ms.masVendidos(ar)
+
+    def opcion3(self, ms, mh):
+        id = int(input("Ingrese ID del sabor:  "))
+        long = ms.getLongitud()
+        while id <= 0 or id > long:
+            id = int(input("ID incorrecto, ingrese desde 1 al {}:  ".format(long)))
+        acum = mh.gramosVendidos(id)
+        if acum == 0:
+            print("No se hicieron pedidos con ese ID de sabor")
+        else:
+            print("Hubo un total de {} gramos vendidos".format(acum))
+
+    def opcion4(self, ms, mh):
+        long = ms.getLongitud()
+        ar = self.creaArreglo(long)
+        peso = int(input("Ingrese tipo de helado (gramos):  "))
+        band = self.verificaGramos(peso)
+        if band:
+            mh.saboresVendidosPorPeso(ar, peso)
+        else:
+            print("Peso incorrecto")
+
+    def opcion5(self, ms, mh):
+        print("   Finaliza el programa")
