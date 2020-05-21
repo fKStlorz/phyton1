@@ -1,0 +1,23 @@
+from ManejadorTalleres import ManejadorTalleres
+from ManejadorPersonas import ManejadorPersonas
+from ManejadorInscripciones import ManejadorInscripciones
+from Menu import Menu
+
+if __name__ == "__main__":
+    mt = ManejadorTalleres()
+    mt.testTaller()
+    mp = ManejadorPersonas()
+    mi = ManejadorInscripciones()
+    menu = Menu()
+    salir = False
+    while not salir:
+        print("    ------         Menu          -----       ")
+        print("1- Inscribir persona en un taller")
+        print("2- Consultar inscripcion con DNI")
+        print("3- Consultar inscriptos con ID del taller")
+        print("4- Registrar pago con DNI")
+        print("5- Guardar inscripciones en un archivo")
+        print("6- Salir")
+        op = int(input('Ingrese una opcion: '))
+        menu.opcion(op, mt, mp, mi)
+        salir = op == 6
