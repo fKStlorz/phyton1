@@ -1,0 +1,72 @@
+from Persona import Persona
+from Inscripcion import Inscripcion
+from FechaHora import FechaHora
+from Decodificador import Decodificador
+
+class Menu:
+    __switcher = None
+
+    def __init__(self):
+        self.__switcher = {1: self.opcion1,
+                           2: self.opcion2,
+                           3: self.opcion3,
+                           4: self.opcion4,
+                           5: self.opcion5,
+                           6: self.opcion6,
+                           }
+
+    def getSwitcher(self):
+        return self.__switcher
+
+    def opcion(self, op, mt, mp, mi):
+        func = self.__switcher.get(op, lambda: print("Opción no válida"))
+        func(mt, mp, mi)
+
+    def opcion1(self, mt, mp, mi):
+        id = int(input("Ingrese ID del taller:  "))
+        t = mt.verificaID(id)
+        if t is None:
+            print("ID inválido")
+        else:
+            if t.actualizaVacantes():
+                nb = input("ID válido, ingrese nombre de la persona:  ")
+                dir = input("Ingrese direccion de la persona:  ")
+                dni = input("Ingrese DNI de la persona:  ")
+                fecha = FechaHora()
+                inscripcion = Inscripcion(fecha)
+                persona = Persona(nb, dir, dni, inscripcion, t)
+                mp.agregaPersona(persona)
+                mi.agregaInscripcion(inscripcion)
+                print("Inscripcion realizada")
+            else:
+                print("El taller seleccionado no tiene mas vacantes")
+
+    def opcion2(self, mt, mp, ml):
+        dni = input("Ingrese DNI de la persona:  ")
+        taller = mp.buscaPorDNI(dni)
+        if taller[0] is None:
+            print("El DNI ingresado no se encuentra en la base de datos")
+        else:
+            print("Nombre del taller: {}".format(taller[0].getNombre()))
+            if taller[1]:
+                print("Esta persona no adeuda ninguna cantidad")
+            else:
+                print("Adeuda un total de: {}$".format(taller[0].getMonto()))
+
+    def opcion3(self, mt, mp, ml):
+        id = int(input("Ingrese ID del taller:  "))
+        mp.buscaPorId(id)
+
+    def opcion4(self, mt, mp, ml):
+        dni = input("Ingrese DNI de la persona:  ")
+        mp.registraPago(dni)
+
+    def opcion5(self, mt, mp, ml):
+        jsonF = Decodificador()
+        personas = mp
+        d = personas.toJSON()
+        jsonF.guardarJSONArchivo(d, 'datosPersonas.json')
+        print("\nDatos guardados\n")
+
+    def opcion6(self, mt, mp, ml):
+        print("     Finaliza el programa")
