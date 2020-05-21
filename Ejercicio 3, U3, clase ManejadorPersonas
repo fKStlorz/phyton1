@@ -1,0 +1,56 @@
+class ManejadorPersonas:
+    __listaPersonas = []
+
+    def __init__(self):
+        self.__listaPersonas = []
+
+    def agregaPersona(self, persona):
+        self.__listaPersonas.append(persona)
+
+    def registraPago(self, dni):
+        band = False
+        i = 0
+        while band == False and i < len(self.__listaPersonas):
+            if self.__listaPersonas[i].getDni() == dni:
+                ins = self.__listaPersonas[i].getInscripcion()
+                if not ins.getPago():
+                    ins.actualizaPago()
+                    print("\nEl pago se realizo satisfactoriamente\n")
+                else:
+                    print("\nEsta persona no debe abonar nada\n")
+                band = True
+            i += 1
+        if not band:
+            print("\nLa persona con el dni {}, no está registrada\n".format(dni))
+
+    def buscaPorId(self, id):
+        band = False
+        for i in self.__listaPersonas:
+            taller = i.getTaller()
+            if taller.getIdTaller() == id:
+                if not band:
+                    print("\n-----------Taller {}---------------".format(taller.getNombre()))
+                    band = True
+                print("Nombre: {}, direccion: {}, DNI: {}".format(i.getNombre(), i.getDireccion(), i.getDni()))
+        if not band:
+            print("El taller con ese ID no existe o no tiene ninguna persona inscripta")
+
+    def buscaPorDNI(self, dni):
+        band = False
+        tallerYpago = [None, False]
+        i = 0
+        while band == False and i < len(self.__listaPersonas):
+            if dni == self.__listaPersonas[i].getDni():
+                band = True
+                tallerYpago[0] = self.__listaPersonas[i].getTaller()
+                ins = self.__listaPersonas[i].getInscripcion()
+                tallerYpago[1] = ins.getPago()
+            i += 1
+        return tallerYpago
+
+    def toJSON(self):
+        d = dict(
+            __class__=self.__class__.__name__,
+            personas=[persona.toJSON() for persona in self.__listaPersonas]
+        )
+        return d
