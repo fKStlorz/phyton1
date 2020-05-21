@@ -1,0 +1,42 @@
+class Persona:
+    __nombre = ""
+    __direccion = ""
+    __dni = ""
+    __inscripcion = None
+    __taller = None
+
+    def __init__(self, nb, dir, dni, ins, taller):
+        self.__nombre = nb
+        self.__direccion = dir
+        self.__dni = dni
+        self.__inscripcion = ins
+        self.__taller = taller
+
+    def getNombre(self):
+        return self.__nombre
+
+    def getDireccion(self):
+        return self.__direccion
+
+    def getDni(self):
+        return self.__dni
+
+    def getInscripcion(self):
+        return self.__inscripcion
+
+    def getTaller(self):
+        return self.__taller
+
+    def toJSON(self):
+        taller = self.__taller
+        ins = self.__inscripcion
+        d = dict(
+            __class__=self.__class__.__name__,
+            __atributos__=dict(
+                dni=self.__dni,
+                idTaller=taller.getIdTaller(),
+                Fecha=ins.getFecha(),
+                pago=ins.getPago()
+            )
+        )
+        return d
