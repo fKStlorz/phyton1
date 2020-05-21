@@ -1,0 +1,8 @@
+class ManejadorInscripciones:
+    __listaInscripciones = []
+
+    def __init__(self):
+        self.__listaInscripciones = []
+
+    def agregaInscripcion(self, ins):
+        self.__listaInscripciones.append(ins)
