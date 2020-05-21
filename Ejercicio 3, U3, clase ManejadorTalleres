@@ -1,0 +1,29 @@
+import csv
+from TallerCapacitacion import TallerCapacitacion
+
+class ManejadorTalleres:
+    __listaTalleres = []
+
+    def __init__(self):
+        self.__listaTalleres = []
+
+    def agregarTaller(self, taller):
+        self.__listaTalleres.append(taller)
+
+    def verificaID(self, id):
+        band = False
+        taller = None
+        i = 0
+        while band == False and i < len(self.__listaTalleres):
+            if id == self.__listaTalleres[i].getIdTaller():
+                band = True
+                taller = self.__listaTalleres[i]
+            i += 1
+        return taller
+
+    def testTaller(self):
+        archivo = open("Talleres.csv")
+        reader = csv.reader(archivo,delimiter=";")
+        for fila in reader:
+            taller = TallerCapacitacion(int(fila[0]),fila[1],int(fila[2]),int(fila[3]))
+            self.agregarTaller(taller)
