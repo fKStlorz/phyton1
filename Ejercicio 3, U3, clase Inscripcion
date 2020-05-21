@@ -1,0 +1,18 @@
+from FechaHora import FechaHora
+
+class Inscripcion:
+    __fechaInscripcion = FechaHora()
+    __pago = False
+
+    def __init__(self, fecha, pago = False):
+        self.__fechaInscripcion = fecha
+        self.__pago = pago
+
+    def getFecha(self):
+        return self.__fechaInscripcion
+
+    def getPago(self):
+        return self.__pago
+
+    def actualizaPago(self):
+        self.__pago = True
