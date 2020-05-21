@@ -1,0 +1,30 @@
+class TallerCapacitacion:
+    __idTaller = 0
+    __nombre = ""
+    __vacantes = 0
+    __montoInscripcion = 0
+
+    def __init__(self, id, nb, vac, monto):
+        self.__idTaller = id
+        self.__nombre = nb
+        self.__vacantes = vac
+        self.__montoInscripcion = monto
+
+    def actualizaVacantes(self):
+        band = False
+        if self.__vacantes != 0:
+            self.__vacantes -= 1
+            band = True
+        return band
+
+    def getIdTaller(self):
+        return self.__idTaller
+
+    def getNombre(self):
+        return self.__nombre
+
+    def getVacantes(self):
+        return self.__vacantes
+
+    def getMonto(self):
+        return self.__montoInscripcion
