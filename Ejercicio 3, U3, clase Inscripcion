@@ -34,7 +34,7 @@ class Inscripcion:
             __atributos__=dict(
                 dni=self.__persona.getDni(),
                 idTaller=self.__taller.getIdTaller(),
-                #Fecha=self.__fechaInscripcion,
+                Fecha=self.__fechaInscripcion,
                 pago=self.__pago
             )
         )
