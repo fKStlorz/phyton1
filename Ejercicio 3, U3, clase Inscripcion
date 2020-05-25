@@ -1,12 +1,17 @@
 from FechaHora import FechaHora
 
+
 class Inscripcion:
     __fechaInscripcion = FechaHora()
     __pago = False
+    __persona = None
+    __taller = None
 
-    def __init__(self, fecha, pago = False):
+    def __init__(self, fecha, persona, taller, pago=False):
         self.__fechaInscripcion = fecha
         self.__pago = pago
+        self.__persona = persona
+        self.__taller = taller
 
     def getFecha(self):
         return self.__fechaInscripcion
@@ -14,5 +19,23 @@ class Inscripcion:
     def getPago(self):
         return self.__pago
 
+    def getPersona(self):
+        return self.__persona
+
+    def getTaller(self):
+        return self.__taller
+
     def actualizaPago(self):
         self.__pago = True
+
+    def toJSON(self):
+        d = dict(
+            __class__=self.__class__.__name__,
+            __atributos__=dict(
+                dni=self.__persona.getDni(),
+                idTaller=self.__taller.getIdTaller(),
+                #Fecha=self.__fechaInscripcion,
+                pago=self.__pago
+            )
+        )
+        return d
