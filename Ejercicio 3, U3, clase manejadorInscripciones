@@ -6,3 +6,39 @@ class ManejadorInscripciones:
 
     def agregaInscripcion(self, ins):
         self.__listaInscripciones.append(ins)
+
+    def buscaPorDNI(self, dni):
+        band = False
+        tallerYpago = [None, False]
+        i = 0
+        while band == False and i < len(self.__listaInscripciones):
+            p = self.__listaInscripciones[i].getPersona()
+            if dni == p.getDni():
+                band = True
+                tallerYpago[0] = p.getTaller()
+                tallerYpago[1] = self.__listaInscripciones[i].getPago()
+            i += 1
+        return tallerYpago
+
+    def registraPago(self, dni):
+        band = False
+        i = 0
+        while band == False and i < len(self.__listaInscripciones):
+            p = self.__listaInscripciones[i].getPersona()
+            if p.getDni() == dni:
+                if not self.__listaInscripciones[i].getPago():
+                    self.__listaInscripciones[i].actualizaPago()
+                    print("\nEl pago se realizo satisfactoriamente\n")
+                else:
+                    print("\nEsta persona no debe abonar nada\n")
+                band = True
+            i += 1
+        if not band:
+            print("\nLa persona con el dni {}, no está registrada\n".format(dni))
+
+    def toJSON(self):
+        d = dict(
+            __class__=self.__class__.__name__,
+            inscripciones=[inscripcion.toJSON() for inscripcion in self.__listaInscripciones]
+        )
+        return d
