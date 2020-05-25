@@ -33,17 +33,17 @@ class Menu:
                 dir = input("Ingrese direccion de la persona:  ")
                 dni = input("Ingrese DNI de la persona:  ")
                 fecha = FechaHora()
-                inscripcion = Inscripcion(fecha)
-                persona = Persona(nb, dir, dni, inscripcion, t)
+                persona = Persona(nb, dir, dni, t)
+                inscripcion = Inscripcion(fecha, persona, t)
                 mp.agregaPersona(persona)
                 mi.agregaInscripcion(inscripcion)
                 print("Inscripcion realizada")
             else:
                 print("El taller seleccionado no tiene mas vacantes")
 
-    def opcion2(self, mt, mp, ml):
+    def opcion2(self, mt, mp, mi):
         dni = input("Ingrese DNI de la persona:  ")
-        taller = mp.buscaPorDNI(dni)
+        taller = mi.buscaPorDNI(dni)
         if taller[0] is None:
             print("El DNI ingresado no se encuentra en la base de datos")
         else:
@@ -53,20 +53,20 @@ class Menu:
             else:
                 print("Adeuda un total de: {}$".format(taller[0].getMonto()))
 
-    def opcion3(self, mt, mp, ml):
+    def opcion3(self, mt, mp, mi):
         id = int(input("Ingrese ID del taller:  "))
         mp.buscaPorId(id)
 
-    def opcion4(self, mt, mp, ml):
+    def opcion4(self, mt, mp, mi):
         dni = input("Ingrese DNI de la persona:  ")
-        mp.registraPago(dni)
+        mi.registraPago(dni)
 
-    def opcion5(self, mt, mp, ml):
+    def opcion5(self, mt, mp, mi):
         jsonF = Decodificador()
-        personas = mp
-        d = personas.toJSON()
+        inscripciones = mi
+        d = inscripciones.toJSON()
         jsonF.guardarJSONArchivo(d, 'datosPersonas.json')
         print("\nDatos guardados\n")
 
-    def opcion6(self, mt, mp, ml):
+    def opcion6(self, mt, mp, mi):
         print("     Finaliza el programa")
