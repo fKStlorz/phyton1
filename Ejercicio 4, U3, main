@@ -1,0 +1,19 @@
+from Menu import Menu
+from Coleccion import Coleccion
+
+if __name__ == "__main__":
+    col = Coleccion()
+    col.testColeccion()
+    menu = Menu()
+    salir = False
+    while not salir:
+        print("    ------         Menu          -----       ")
+        print("1- Registrar horas")
+        print("2- Ingresar tarea, y verificar monto total (y que no hayan finalizado)")
+        print("3- Listado de empleados que necesitan ayuda (sueldo menor a 25000)")
+        print("4- Mostrar nombre, telefono y sueldo de todos los empleados")
+        print("5- Salir")
+        op = int(input('Ingrese una opcion: '))
+        menu.opcion(op, col)
+        salir = op == 5
+
