@@ -1,0 +1,41 @@
+class Menu:
+    __switcher = None
+
+    def __init__(self):
+        self.__switcher = {1: self.opcion1,
+                           2: self.opcion2,
+                           3: self.opcion3,
+                           4: self.opcion4,
+                           5: self.opcion5,
+                           }
+
+    def getSwitcher(self):
+        return self.__switcher
+
+    def opcion(self, op, col):
+        func = self.__switcher.get(op, lambda: print("Opción no válida"))
+        func(col)
+
+    def opcion1(self, col):
+        dni = input("Ingrese DNI del empleado:  ")
+        hr = int(input("Ingrese horas que esta persona trabajó:  "))
+        col.buscaDni(dni, hr)
+
+    def opcion2(self, col):
+        tarea = input("Ingrese la tarea a revisar:  ")
+        total = col.totalTarea(tarea)
+        if total == 0:
+            print("○2nNo hay tareas con ese nombre o ya finalizaron\n")
+        else:
+            print("\nMonto total a pagar por esa tarea: {}\n".format(total))
+
+    def opcion3(self, col):
+        col.ayudaEmpresa()
+
+    def opcion4(self, col):
+        col.verEmpleados()
+
+    def opcion5(self, col):
+        print("Finaliza el programa")
+
+
