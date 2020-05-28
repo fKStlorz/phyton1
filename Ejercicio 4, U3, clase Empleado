@@ -1,0 +1,23 @@
+class Empleado:
+    __dni = ""
+    __nombre = ""
+    __direccion = ""
+    __telefono = ""
+
+    def __init__(self, dni, nb, dir, tel):
+        self.__dni = dni
+        self.__nombre = nb
+        self.__direccion = dir
+        self.__telefono = tel
+
+    def getDni(self):
+        return self.__dni
+
+    def getNombre(self):
+        return self.__nombre
+
+    def getDireccion(self):
+        return self.__direccion
+
+    def getTelefono(self):
+        return self.__telefono
