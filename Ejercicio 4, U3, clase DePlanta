@@ -1,0 +1,17 @@
+from Empleado import Empleado
+
+
+class DePlanta(Empleado):
+    __sueldoB = 0
+    __antiguedad = 0
+
+    def __init__(self, dni, nb, dir, tel, sueldob, ant):
+        super().__init__(dni, nb, dir, tel)
+        self.__sueldoB = sueldob
+        self.__antiguedad = ant
+
+    def getSueldoBasico(self):
+        return self.__sueldoB
+
+    def getAntiguedad(self):
+        return self.__antiguedad
