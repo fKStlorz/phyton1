@@ -1,3 +1,6 @@
+import abc
+from abc import ABC
+
 class Empleado:
     __dni = ""
     __nombre = ""
@@ -21,3 +24,10 @@ class Empleado:
 
     def getTelefono(self):
         return self.__telefono
+
+    @abc.abstractmethod
+    def calculaSueldo(self):
+        pass
+
+    def getSueldo(self):
+        return self.calculaSueldo()
