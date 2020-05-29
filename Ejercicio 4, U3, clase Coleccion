@@ -13,24 +13,15 @@ class Coleccion:
     def __init__(self):
         self.__arregloEmpleados = None
 
-    def calculaSueldo(self, empl):
-        if type(empl) == DePlanta:
-            sueldo = empl.getSueldoBasico() + ((1*empl.getSueldoBasico())/100) * empl.getAntiguedad()
-        elif type(empl) == Contratado:
-            sueldo = empl.getHorasT() * empl.getValorPorHora()
-        else:
-            sueldo = empl.getCostoObra() - empl.getMontoViatico() - empl.getMontoSeguro()
-        return sueldo
-
     def verEmpleados(self):
         print("\n----Listado de empleados----")
         for i in self.__arregloEmpleados:
-            print("Nombre: {} , telefono: {} , sueldo: ${}".format(i.getNombre(), i.getTelefono(), self.calculaSueldo(i)))
+            print("Nombre: {} , telefono: {} , sueldo: ${}".format(i.getNombre(), i.getTelefono(), i.getSueldo()))
 
     def ayudaEmpresa(self):
         band = False
         for i in self.__arregloEmpleados:
-            sueldo = self.calculaSueldo(i)
+            sueldo = i.getSueldo()
             if sueldo < 25000:
                 if not band:
                     print("\n---Lista de empleados que necesitan ayuda economica---")
@@ -45,7 +36,7 @@ class Coleccion:
             if type(i) == Externos:
                 if i.getTarea().lower() == t.lower():
                     if i.getFechaFinalizacion() > datetime.date.today():
-                        acum = acum + self.calculaSueldo(i)
+                        acum = acum + i.getSueldo()
         return acum
 
     def buscaDni(self, dni, hr):
