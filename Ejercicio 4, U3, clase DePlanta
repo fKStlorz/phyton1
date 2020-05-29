@@ -15,3 +15,7 @@ class DePlanta(Empleado):
 
     def getAntiguedad(self):
         return self.__antiguedad
+
+    def calculaSueldo(self):
+        sueldo = self.__sueldoB + ((1 * self.__sueldoB) / 100) * self.__antiguedad
+        return sueldo
