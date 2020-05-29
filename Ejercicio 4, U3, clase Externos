@@ -33,3 +33,7 @@ class Externos(Empleado):
 
     def getFechaFinalizacion(self):
         return self.__fechaFinalizacion
+
+    def calculaSueldo(self):
+        sueldo = self.__costoObra - self.__montoViatico - self.__montoSeguro
+        return sueldo
