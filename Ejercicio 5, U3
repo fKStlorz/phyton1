@@ -3,11 +3,12 @@ from zope.interface import implementer
 
 
 class IpruebaInterfaz(Interface):
-    def insertarElemento(elementoAinsertar):
+    def insertarElemento(elementoAinsertar, posicion):
         pass
 
     def agregarElemento(elementoAagregar):
         pass
 
-    def mostrarElemento(elementoAmostrar):
+    def mostrarElemento(posicion):
         pass
+
