@@ -24,3 +24,7 @@ class Contratado(Empleado):
     def aumentaHoras(self, hr):
         self.__horasTrabajadas += hr
         print("\nHoras sumadas con exito\n")
+
+    def calculaSueldo(self):
+        sueldo = self.__horasTrabajadas * self.valorPorHora
+        return sueldo
