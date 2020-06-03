@@ -1,0 +1,41 @@
+import abc
+from abc import ABC
+
+
+class Vehiculo:
+    __modelo = ""
+    __puertas = 0
+    __color = ""
+    __precio = 0
+
+    def __init__(self, mod, puertas, color, precio):
+        self.__modelo = mod
+        self.__puertas = puertas
+        self.__color = color
+        self.__precio = precio
+
+    def datos(self):
+        s = "Modelo: {}, Puertas: {}, Color: {}, Precio base: {}".format(self.__modelo, self.__puertas, self.__color, self.__precio)
+        return s
+
+    def getModelo(self):
+        return self.__modelo
+
+    def getPuertas(self):
+        return self.__puertas
+
+    def getColor(self):
+        return self.__color
+
+    def getPrecio(self):
+        return self.__precio
+
+    def setPrecio(self, precio):
+        self.__precio = precio
+
+    @abc.abstractmethod
+    def porcentaje(self):
+        pass
+
+    def precioVenta(self):
+        return self.__precio + (self.porcentaje() * self.__precio) / 100
