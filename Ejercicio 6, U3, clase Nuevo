@@ -1,0 +1,36 @@
+from Vehiculo import Vehiculo
+
+
+class Nuevo(Vehiculo):
+    __version = ""
+
+    def __init__(self, modelo, puertas, color, precio, version):
+        super().__init__(modelo, puertas, color, precio)
+        self.__version = version
+
+    def __str__(self):
+        s = "[NUEVO] Modelo: {}, Puertas: {}, Importe de venta: {}".format(super().getModelo(), super().getPuertas(),
+                                                                           super().precioVenta())
+        return s
+
+    def getVersion(self):
+        return self.__version
+
+    def porcentaje(self):
+        por = 10
+        if self.__version.lower() == "full":
+            por += 2
+        return por
+
+    def toJSON(self):
+        d = dict(
+            __class__=self.__class__.__name__,
+            __atributos__=dict(
+                modelo=super().getModelo(),
+                puertas=super().getPuertas(),
+                color=super().getColor(),
+                precio=super().getPrecio(),
+                version=self.__version
+            )
+        )
+        return d
