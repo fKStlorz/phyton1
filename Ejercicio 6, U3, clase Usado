@@ -1,0 +1,55 @@
+from Vehiculo import Vehiculo
+import datetime
+
+
+class Usado(Vehiculo):
+    __marca = ""
+    __patente = ""
+    __anio = 0
+    __km = 0
+
+    def __init__(self, modelo, puertas, color, precio, marca, patente, anio, km):
+        super().__init__(modelo, puertas, color, precio)
+        self.__marca = marca
+        self.__patente = patente
+        self.__anio = anio
+        self.__km = km
+
+    def __str__(self):
+        s = "[USADO] Modelo: {}, Puertas: {}, Importe de venta: {}".format(super().getModelo(), super().getPuertas(),
+                                                                           super().precioVenta())
+        return s
+
+    def getMarca(self):
+        return self.__marca
+
+    def getPatente(self):
+        return self.__patente
+
+    def getAño(self):
+        return self.__anio
+
+    def getKm(self):
+        return self.__km
+
+    def porcentaje(self):
+        por = datetime.date.today().year - self.__anio
+        if self.__km > 100000:
+            por += 2
+        return -por
+
+    def toJSON(self):
+        d = dict(
+            __class__=self.__class__.__name__,
+            __atributos__=dict(
+                modelo=super().getModelo(),
+                puertas=super().getPuertas(),
+                color=super().getColor(),
+                precio=super().getPrecio(),
+                marca=self.__marca,
+                patente=self.__patente,
+                anio=self.__anio,
+                km=self.__km
+            )
+        )
+        return d
