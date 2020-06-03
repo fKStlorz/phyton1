@@ -1,0 +1,110 @@
+from Nodo import Nodo
+from Nuevo import Nuevo
+from Usado import Usado
+from IElemento import IVehiculo
+from zope.interface import implementer
+
+
+@implementer(IVehiculo)
+class Lista:
+    __comienzo = None
+    __actual = None
+    __indice = 0
+    __tope = 0
+
+    def __init__(self):
+        self.__comienzo = None
+        self.__actual = None
+
+    def agregarVehiculo(self, vehiculo):
+        nodo = Nodo(vehiculo)
+        nodo.setSiguiente(self.__comienzo)
+        self.__comienzo = nodo
+        self.__actual = nodo
+        self.__tope += 1
+
+    def insertarVehiculo(self, veh, pos):
+        if pos == 0:
+            self.agregarVehiculo(veh)
+            print("\n\n---Vehiculo insertado correctamente---")
+        else:
+            nuevoveh = Nodo(veh)
+            aux = self.__comienzo
+            i = 0
+            while aux is not None and i < pos:
+                anterior = aux
+                aux = aux.getSiguiente()
+                i += 1
+            if aux is None:
+                print("\n\n---Numero de posicion incorrecto---")
+            else:
+                nuevoveh.setSiguiente(aux)
+                anterior.setSiguiente(nuevoveh)
+                self.__tope += 1
+                print("\n\n---Vehiculo insertado correctamente---")
+
+    def mostrarVehiculo(self, pos):
+        if pos >= 0 and pos < self.__tope:
+            i = 0
+            aux = self.__comienzo
+            while i <= pos:
+                tipo = type(aux.getDato())
+                aux = aux.getSiguiente()
+                i += 1
+            if tipo == Nuevo:
+                print("\nEn esa posicion hay un objeto de tipo Nuevo\n")
+            else:
+                print("\nEn esa posicion hay un objeto de tipo Usado\n")
+        else:
+            print("\n---Posicion incorrecta---")
+
+    def precioPatente(self, patente):
+        aux = self.__comienzo
+        band = False
+        while aux is not None and band == False:
+            if type(aux.getDato()) == Usado:
+                v = aux.getDato()
+                if v.getPatente().lower() == patente.lower():
+                    band = True
+                    precio = int(input("\nVehiculo encontrado, ingrese nuevo precio:  "))
+                    v.setPrecio(precio)
+                    print("\n-- El nuevo precio del vehiculo es: {}$ --\n".format(v.precioVenta()))
+            aux = aux.getSiguiente()
+        if not band:
+            print("\n--No se encontró esa patente--\n")
+
+    def masEconomico(self):
+        min = 9999999
+        for i in self:
+            if i.precioVenta() < min:
+                j = i
+                min = i.precioVenta()
+        print("\n--Datos del vehiculo mas economico--")
+        print(j.datos())
+        print("Precio de venta: {}\n".format(min))
+
+    def listarVehiculos(self):
+        for i in self:
+            print(i)
+        input()
+
+    def toJSON(self):
+        lista = []
+        for v in self:
+            lista.append(v.toJSON())
+        d = dict(__class__=self.__class__.__name__, datos=lista)
+        return d
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.__indice == self.__tope:
+            self.__actual = self.__comienzo
+            self.__indice = 0
+            raise StopIteration
+        else:
+            self.__indice += 1
+            dato = self.__actual.getDato()
+            self.__actual = self.__actual.getSiguiente()
+            return dato
