@@ -1,0 +1,12 @@
+from zope.interface import Interface
+
+
+class IVehiculo(Interface):
+    def insertarVehiculo(elementoAinsertar, posicion):
+        pass
+
+    def agregarVehiculo(elementoAagregar):
+        pass
+
+    def mostrarVehiculoo(posicion):
+        pass
