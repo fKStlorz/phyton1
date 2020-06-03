@@ -1,0 +1,75 @@
+from Nuevo import Nuevo
+from Usado import Usado
+from Decodificador import Decodificador
+
+
+class Menu:
+    __switcher = None
+
+    def __init__(self):
+        self.__switcher = {1: self.opcion1,
+                           2: self.opcion2,
+                           3: self.opcion3,
+                           4: self.opcion4,
+                           5: self.opcion5,
+                           6: self.opcion6,
+                           7: self.opcion7,
+                           8: self.opcion8
+                           }
+
+    def getSwitcher(self):
+        return self.__switcher
+
+    def opcion(self, op, lis):
+        func = self.__switcher.get(op, lambda: print("Opción no válida"))
+        func(lis)
+
+    def AgregarVehiculo(self, lis):
+        modelo = input("Ingrese modelo del vehiculo:  ")
+        puertas = int(input("Ingrese cantidad de puertas del vehiculo:  "))
+        color = input("Ingrese color del vehiculo:  ")
+        precio = int(input("Ingrese precio del vehiculo:  "))
+        v = input("Ingrese tipo de vehiculo (nuevo o usado):  ")
+        if v.lower() == "nuevo":
+            version = input("Ingrese version del vehiculo (full o base):  ")
+            veh = Nuevo(modelo, puertas, color, precio, version)
+        else:
+            marca = input("Ingrese marca del vehiculo:  ")
+            patente = input("Ingrese patente del vehiculo:  ")
+            año = int(input("Ingrese año del vehiculo:  "))
+            km = int(input("Ingrese kilometraje del vehiculo:  "))
+            veh = Usado(modelo, puertas, color, precio, marca, patente, año, km)
+        return veh
+
+    def opcion1(self, lis):
+        v = self.AgregarVehiculo(lis)
+        pos = int(input("Ingrese numero de posición en la lista:  "))
+        lis.insertarVehiculo(v, pos - 1)
+
+    def opcion2(self, lis):
+        v = self.AgregarVehiculo(lis)
+        lis.agregarVehiculo(v)
+
+    def opcion3(self, lis):
+        pos = int(input("Ingrese posicion:  "))
+        lis.mostrarVehiculo(pos - 1)
+
+    def opcion4(self, lis):
+        pat = input("Ingrese patente del vehiculo:  ")
+        lis.precioPatente(pat)
+
+    def opcion5(self, lis):
+        lis.masEconomico()
+
+    def opcion6(self, lis):
+        lis.listarVehiculos()
+
+    def opcion7(self, lis):
+        jsonF = Decodificador()
+        lista = lis
+        d = lista.toJSON()
+        jsonF.guardarJSONArchivo(d, "vehiculos.json")
+        print("\n---Datos guardados---\n")
+
+    def opcion8(self, lis):
+        print("Finaliza el programa")
