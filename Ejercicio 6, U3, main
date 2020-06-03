@@ -1,0 +1,24 @@
+from Lista import Lista
+from Menu import Menu
+from Decodificador import Decodificador
+
+if __name__ == "__main__":
+    decodificador = Decodificador()
+    diccionario = decodificador.leerJSONArchivo("vehiculos.json")
+    lista = decodificador.decodificarDiccionario(diccionario)
+    menu = Menu()
+    salir = False
+    while not salir:
+        print("    ---------         Menu          --------       ")
+        print("1- Insertar Vehiculo en una posicion determinada")
+        print("2- Agregar vehiculo")
+        print("3- Dada una posicion, mostrar que tipo de objeto se encuentra")
+        print("4- Modificar precio base con la patente de un vehiculo usado")
+        print("5- Mostrar todos los datos, incluido el importe de venta, del vehículo más económico")
+        print("6- Mostrar para todos los vehículos que la concesionaria tiene a la venta, modelo, cantidad de puertas "
+              "e importe de venta.")
+        print("7- Almacenar la coleccion en el archivo vehiculos.json")
+        print("8- Salir")
+        op = int(input('Ingrese una opcion: '))
+        menu.opcion(op, lista)
+        salir = op == 8
