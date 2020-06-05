@@ -1,0 +1,28 @@
+from Menu import Menu
+from Decodificador import Decodificador
+
+
+if __name__ == "__main__":
+    decodificador = Decodificador()
+    diccionario = decodificador.leerJSONArchivo("personal.json")
+    lista = decodificador.decodificarDiccionario(diccionario)
+    menu = Menu()
+    salir = False
+    while not salir:
+        print("    ---------         Menu          --------       ")
+        print("1- Insertar un agente en una posicion determinada")
+        print("2- Agregar agente")
+        print("3- Dada una posicion, mostrar que tipo de objeto se encuentra")
+        print("4- Ingresar por teclado el nombre de una carrera y generar un listado ordenado por nombre con todos "
+              "los datos de los agentes que se desempeñan como docentes investigadores.")
+        print("5- Dada un área de investigación, contar la cantidad de agentes que son docente investigador, "
+              "y la cantidad de investigadores que trabajen en ese área.")
+        print("6- Recorrer la colección y generar un listado que muestre nombre y apellido, tipo de Agente y sueldo de "
+              "todos los agentes, ordenado por apellido.")
+        print("7- Dada una categoría de investigación listar apellido, nombre e importe, de todos los docentes "
+              "investigadores que poseen esa categoría, y ademas mostar concepto de importe extra total")
+        print("8- Almacenar la coleccion en el archivo personal.json")
+        print("9- Salir")
+        op = int(input('Ingrese una opcion: '))
+        menu.opcion(op, lista)
+        salir = op == 9
