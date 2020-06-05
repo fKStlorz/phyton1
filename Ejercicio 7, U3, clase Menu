@@ -1,0 +1,140 @@
+from Decodificador import Decodificador
+from PersonalApoyo import PersonalApoyo
+from Docente import Docente
+from Investigador import Investigador
+from DocenteInvestigador import DocenteInvestigador
+
+
+class Menu:
+    __switcher = None
+
+    def __init__(self):
+        self.__switcher = {1: self.opcion1,
+                           2: self.opcion2,
+                           3: self.opcion3,
+                           4: self.opcion4,
+                           5: self.opcion5,
+                           6: self.opcion6,
+                           7: self.opcion7,
+                           8: self.opcion8,
+                           9: self.opcion9
+                           }
+
+    def getSwitcher(self):
+        return self.__switcher
+
+    def opcion(self, op, lis):
+        func = self.__switcher.get(op, lambda: print("Opción no válida"))
+        func(lis)
+
+    def pApoyo(self):
+        categoria = int(input("Ingrese categoria del personal de apoyo:  "))
+        return categoria
+
+    def docente(self):
+        lis = []
+        carrera = input("Ingrese carrera del docente:  ")
+        lis.append(carrera)
+        cargo = input("Ingrese cargo del docente:  ")
+        lis.append(cargo)
+        catedra = input("Ingrese catedra del docente:  ")
+        lis.append(catedra)
+        return lis
+
+    def inv(self):
+        lis = []
+        areainv = input("Ingrese area de investigacion del investigador:  ")
+        lis.append(areainv)
+        tipoinv = input("Ingrese tipo de investigacion del investigador:  ")
+        lis.append(tipoinv)
+        return lis
+
+    def docinv(self):
+        print("Datos propios de Docente investigador")
+        lis = []
+        catinv = int(input("Ingrese categoría de la investigacion:  "))
+        lis.append(catinv)
+        impextra = int(input("Ingrese importe extra:  "))
+        lis.append(impextra)
+        return lis
+
+    def agregarPersonal(self):
+        personal = None
+        cuil = int(input("Ingrese CUIL del personal:  "))
+        apellido = input("Ingrese apellido del personal:  ")
+        nombre = input("Ingrese nombre del personal:  ")
+        sueldob = int(input("Ingrese sueldo basico del personal:  "))
+        ant = int(input("Ingrese antiguedad en años del personal:  "))
+
+        print("-----------Elegir tipo de personal-----------")
+        print("1- Personal de apoyo")
+        print("2- Docente")
+        print("3- Investigador")
+        print("4- Docente investigador")
+        print("---------------------------------------------")
+        op = int(input("Ingrese la opcion:  "))
+        if op == 1:
+            cat = self.pApoyo()
+            personal = PersonalApoyo(cuil, apellido, nombre, sueldob, ant, cat)
+        elif op == 2:
+            doc = self.docente()
+            personal = Docente(cuil, apellido, nombre, sueldob, ant, "", "", doc[0], doc[1], doc[2])
+        elif op == 3:
+            inv = self.inv()
+            personal = Investigador(cuil, apellido, nombre, sueldob, ant, inv[0], inv[1], "", "", "")
+        elif op == 4:
+            print("Datos de parte del docente")
+            doc = self.docente()
+            print("Datos de parte del investigador")
+            inv = self.inv()
+            docinv = self.docinv()
+            personal = DocenteInvestigador(cuil, apellido, nombre, sueldob, ant, doc[0], doc[1], doc[2], inv[0], inv[1], docinv[0], docinv[1])
+        return personal
+
+    def opcion1(self, lis):
+        p = self.agregarPersonal()
+        pos = int(input("Ingrese numero de posición en la lista:  "))
+        lis.insertarPersonal(p, pos - 1)
+        input()
+
+    def opcion2(self, lis):
+        personal = self.agregarPersonal()
+        if personal is None:
+            print("\n--Numero de personal incorrecto--\n")
+            input()
+        else:
+            lis.agregarPersonal(personal)
+            print("--Personal agregado con exito--")
+            input()
+
+    def opcion3(self, lis):
+        pos = int(input("Ingrese posicion:  "))
+        lis.mostrarPersonal(pos - 1)
+
+    def opcion4(self, lis):
+        c = input("Ingrese la carrera:  ")
+        lis.listadoCarrera(c)
+
+    def opcion5(self, lis):
+        areainv = input("Ingrese area de investigacion:  ")
+        lis.contarAgentes(areainv)
+
+    def opcion6(self, lis):
+        lis.listarAgentes()
+
+    def opcion7(self, lis):
+        cat = int(input("Ingrese numero de categoria (1,2,3,4 o 5):  "))
+        while cat < 1 or cat > 5:
+            cat = int(input("Numero incorrecto de categoria, ingrese nuevamente (1,2,3,4 o 5):  "))
+        lis.listarCategoria(cat)
+
+    def opcion8(self, lis):
+        jsonF = Decodificador()
+        lista = lis
+        d = lista.toJSON()
+        jsonF.guardarJSONArchivo(d, "personal.json")
+        print("\n---Datos guardados---\n")
+        input()
+
+    def opcion9(self, lis):
+        print("Finaliza el programa")
