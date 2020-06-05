@@ -1,0 +1,43 @@
+from Docente import Docente
+from Investigador import Investigador
+
+
+class DocenteInvestigador(Docente, Investigador):
+    __categoriainvestigacion = 0
+    __importeExtra = 0
+
+    def __init__(self, cuil, nombre, apellido, sueldob, antiguedad, carrera, cargo, catedra, areainv, tipoinv, categoria, importeextra):
+        super().__init__(cuil, nombre, apellido, sueldob, antiguedad, areainv, tipoinv, carrera, cargo, catedra)
+        self.__categoriainvestigacion = categoria
+        self.__importeExtra = importeextra
+
+    def getCategoriaInvestigacion(self):
+        return self.__categoriainvestigacion
+
+    def getImporteExtra(self):
+        return self.__importeExtra
+
+    def porcentaje(self):
+        por = Docente.porcentaje(self)
+        por2 = (self.__importeExtra * 100) / Docente.getSueldoBasico(self)
+        return por + por2
+
+    def toJSON(self):
+        d = dict(
+            __class__=self.__class__.__name__,
+            __atributos__=dict(
+                cuil=super().getCuil(),
+                apellido=super().getApellido(),
+                nombre=super().getNombre(),
+                sueldob=super().getSueldoBasico(),
+                antiguedad=super().getAntiguedad(),
+                carrera=super().getCarrera(),
+                cargo=super().getCargo(),
+                catedra=super().getCatedra(),
+                areainv = super().getAreaInvestigacion(),
+                tipoinv = super().getTipoInvestigacion(),
+                categoria=self.__categoriainvestigacion,
+                importeextra=self.__importeExtra
+            )
+        )
+        return d
