@@ -1,0 +1,40 @@
+import abc
+from abc import ABC
+
+
+class Personal:
+    __cuil = 0
+    __apellido = ""
+    __nombre = ""
+    __sueldob = 0
+    __antiguedad = 0
+
+    def __init__(self, cuil, apellido, nombre, sueldob, antiguedad, areainv="", tipoinv="", carrera="", cargo="",
+                 catedra=""):
+        self.__cuil = cuil
+        self.__apellido = apellido
+        self.__nombre = nombre
+        self.__sueldob = sueldob
+        self.__antiguedad = antiguedad
+
+    def getCuil(self):
+        return self.__cuil
+
+    def getApellido(self):
+        return self.__apellido
+
+    def getNombre(self):
+        return self.__nombre
+
+    def getSueldoBasico(self):
+        return self.__sueldob
+
+    def getAntiguedad(self):
+        return self.__antiguedad
+
+    @abc.abstractmethod
+    def porcentaje(self):
+        pass
+
+    def sueldo(self):
+        return self.__sueldob + (self.porcentaje() * self.__sueldob) / 100
