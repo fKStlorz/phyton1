@@ -1,0 +1,165 @@
+from Nodo import Nodo
+from PersonalApoyo import PersonalApoyo
+from Investigador import Investigador
+from Docente import Docente
+from DocenteInvestigador import DocenteInvestigador
+from IElemento import IPersonal
+from zope.interface import implementer
+
+
+@implementer(IPersonal)
+class Lista:
+    __comienzo = None
+    __actual = None
+    __indice = 0
+    __tope = 0
+
+    def __init__(self):
+        self.__comienzo = None
+        self.__actual = None
+
+    def agregarPersonal(self, per):
+        nodo = Nodo(per)
+        nodo.setSiguiente(self.__comienzo)
+        self.__comienzo = nodo
+        self.__actual = nodo
+        self.__tope += 1
+
+    def insertarPersonal(self, per, pos):
+        if pos == 0:
+            self.agregarPersonal(per)
+            print("\n\n---Personal insertado correctamente---")
+        else:
+            nuevoper = Nodo(per)
+            aux = self.__comienzo
+            i = 0
+            while aux is not None and i < pos:
+                anterior = aux
+                aux = aux.getSiguiente()
+                i += 1
+            if aux is None:
+                print("\n\n---Numero de posicion incorrecto---")
+            else:
+                nuevoper.setSiguiente(aux)
+                anterior.setSiguiente(nuevoper)
+                self.__tope += 1
+                print("\n\n---Personal insertado correctamente---\n")
+
+    def mostrarPersonal(self, pos):
+        if pos >= 0 and pos < self.__tope:
+            i = 0
+            aux = self.__comienzo
+            while i <= pos:
+                tipo = type(aux.getDato())
+                aux = aux.getSiguiente()
+                i += 1
+            if tipo == PersonalApoyo:
+                print("\nEn esa posicion hay un objeto de tipo PersonalApoyo\n")
+            elif tipo == Docente:
+                print("\nEn esa posicion hay un objeto de tipo Docente\n")
+            elif tipo == Investigador:
+                print("\nEn esa posicion hay un objeto de tipo Investigador\n")
+            else:
+                print("\nEn esa posicion hay un objeto de tipo DocenteInvestigador\n")
+        else:
+            print("\n---Posicion incorrecta---")
+
+    def ordenarAlfabeticamente(self, lista, long, band):
+        j = 0
+        aux = self.__comienzo
+        while aux is not None:
+            agente = aux.getDato()
+            if band:
+                compara = agente.getNombre()
+            else:
+                compara = agente.getApellido()
+            if compara == lista[j]:
+                j += 1
+                print("Nombre: {}, Apellido: {}, Tipo: {}, Sueldo: {}".format(agente.getNombre(), agente.getApellido(), type(agente), agente.sueldo()))
+                if j != long:
+                    aux = aux.getSiguiente()
+                    if aux is None:
+                        aux = self.__comienzo
+                else:
+                    aux = None
+            else:
+                aux = aux.getSiguiente()
+                if aux is None:
+                    aux = self.__comienzo
+
+    def listadoCarrera(self, carrera):
+        nombres = []
+        band = False
+        for i in self:
+            if type(i) == DocenteInvestigador:
+                if i.getCarrera() == carrera:
+                    nombres.append(i.getNombre())
+                    band = True
+        if not band:
+            print("\n-- No se encontraron docentes investigadores con esa carrera --\n")
+        else:
+            nombres.sort()
+            self.ordenarAlfabeticamente(nombres, len(nombres), True)
+        input()
+
+    def contarAgentes(self, areainv):
+        continv = 0
+        contdocinv = 0
+        for i in self:
+            if type(i) == DocenteInvestigador:
+                if i.getAreaInvestigacion() == areainv:
+                    contdocinv += 1
+            if type(i) == Investigador:
+                if i.getAreaInvestigacion() == areainv:
+                    continv += 1
+        if continv == 0 and contdocinv == 0:
+            print("\nNo se encontraron investigador ni docentes investigadores en esa Area de investigacion\n")
+        else:
+            print("\nHay un total de {} investigador/es en esa area de investigacion".format(continv))
+            print("Hay un total de {} docente/s investigador/es en esa area de investigacion\n".format(contdocinv))
+        input()
+
+    def listarAgentes(self):
+        apellidos = []
+        for i in self:
+            apellidos.append(i.getApellido())
+        apellidos.sort()
+        self.ordenarAlfabeticamente(apellidos, len(apellidos), False)
+        input()
+
+    def listarCategoria(self, cat):
+        acum = 0
+        for i in self:
+            if type(i) == DocenteInvestigador:
+                if i.getCategoriaInvestigacion() == cat:
+                    if acum == 0:
+                        print("\n-- Listado de docentes investigadores con esa categoria --")
+                    print("Apellido: {} , Nombre: {}, importe extra: {}".format(i.getApellido(), i.getNombre(), i.getImporteExtra()))
+                    acum += i.getImporteExtra()
+        if acum == 0:
+            print("-- No hay docentes investigadores en ese nivel de categoria --")
+        else:
+            print("\nLa secretaría de investigación deberá solicitar al ministerio un total de ${},en concepto de "
+                  "importe extra".format(acum))
+        input()
+
+    def toJSON(self):
+        lista = []
+        for p in self:
+            lista.append(p.toJSON())
+        d = dict(__class__=self.__class__.__name__, datos=lista)
+        return d
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.__indice == self.__tope:
+            self.__actual = self.__comienzo
+            self.__indice = 0
+            raise StopIteration
+        else:
+            self.__indice += 1
+            dato = self.__actual.getDato()
+            self.__actual = self.__actual.getSiguiente()
+            return dato
