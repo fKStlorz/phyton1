@@ -1,0 +1,36 @@
+from Personal import Personal
+
+
+class PersonalApoyo(Personal):
+    __categoria = 0
+
+    def __init__(self, cuil, apellido, nombre, sueldob, antiguedad, categoria):
+        super().__init__(cuil, apellido, nombre, sueldob, antiguedad)
+        self.__categoria = categoria
+
+    def getCategoria(self):
+        return self.__categoria
+
+    def porcentaje(self):
+        por = super().getAntiguedad()
+        if self.__categoria > 11:
+            por += 10
+        elif self.__categoria > 21:
+            por += 20
+        else:
+            por += 30
+        return por
+
+    def toJSON(self):
+        d = dict(
+            __class__=self.__class__.__name__,
+            __atributos__=dict(
+                cuil=super().getCuil(),
+                apellido=super().getApellido(),
+                nombre=super().getNombre(),
+                sueldob=super().getSueldoBasico(),
+                antiguedad=super().getAntiguedad(),
+                categoria=self.__categoria
+            )
+        )
+        return d
