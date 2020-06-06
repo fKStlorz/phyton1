@@ -1,0 +1,30 @@
+from Empleado import Empleado
+import datetime
+
+
+class Contratado(Empleado):
+    __fechaInicio = datetime
+    __fechaFinalizacion = datetime
+    __horasTrabajadas = 0
+    valorPorHora = 0
+
+    def __init__(self, dni, nb, dir, tel, fInicio, fFinalizacion, horast):
+        super().__init__(dni, nb, dir, tel)
+        self.__fechaInicio = fInicio
+        self.__fechaFinalizacion = fFinalizacion
+        self.__horasTrabajadas = horast
+
+    @classmethod
+    def getValorPorHora(cls):
+        return cls.valorPorHora
+
+    def getHorasT(self):
+        return self.__horasTrabajadas
+
+    def aumentaHoras(self, hr):
+        self.__horasTrabajadas += hr
+        print("\nHoras sumadas con exito\n")
+
+    def calculaSueldo(self):
+        sueldo = self.__horasTrabajadas * self.valorPorHora
+        return sueldo
