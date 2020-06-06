@@ -1,0 +1,139 @@
+import numpy as np
+import datetime
+from Empleado import Empleado
+from DePlanta import DePlanta
+from Contratado import Contratado
+from Externos import Externos
+from ITesorero import ITesorero
+from IGerente import IGerente
+from zope.interface import implementer
+import csv
+
+@implementer(IGerente)
+@implementer(ITesorero)
+class Coleccion:
+    __arregloEmpleados = None
+
+    def __init__(self):
+        self.__arregloEmpleados = None
+
+    def verEmpleados(self):
+        print("\n----Listado de empleados----")
+        for i in self.__arregloEmpleados:
+            print("Nombre: {} , telefono: {} , sueldo: ${}".format(i.getNombre(), i.getTelefono(), i.getSueldo()))
+
+    def ayudaEmpresa(self):
+        band = False
+        for i in self.__arregloEmpleados:
+            sueldo = i.getSueldo()
+            if sueldo < 25000:
+                if not band:
+                    print("\n---Lista de empleados que necesitan ayuda economica---")
+                band = True
+                print("Nombre: {}  -  Direccion: {}   -  DNI: {}".format(i.getNombre(), i.getDireccion(), i.getDni()))
+        if not band:
+            print("\nNo hay empleados con un sueldo menor a 25000\n")
+
+    def totalTarea(self, t):
+        acum = 0
+        for i in self.__arregloEmpleados:
+            if type(i) == Externos:
+                if i.getTarea().lower() == t.lower():
+                    if i.getFechaFinalizacion() > datetime.date.today():
+                        acum = acum + i.getSueldo()
+        return acum
+
+    def buscaDni(self, dni):
+        i = 0
+        band = False
+        emp = None
+        while band == False and i < len(self.__arregloEmpleados):
+            if self.__arregloEmpleados[i].getDni() == dni:
+                band = True
+                emp = self.__arregloEmpleados[i]
+            i += 1
+        return emp
+
+    def registraHoras(self, dni, hr):
+        emp = self.buscaDni(dni)
+        if emp is not None:
+            if type(emp) == Contratado:
+                emp.aumentaHoras(hr)
+            else:
+                print("\nLa persona con ese Dni no es de tipo Contratado, por ende no se puede sumar las horas\n")
+        else:
+            print("La persona con ese DNI no se encontró en el registro")
+
+    def gastosSueldoPorEmpleado(self, dni):
+        emp = self.buscaDni(dni)
+        if emp is not None:
+            print("Este empleado tiene unos gastos de ${} (sueldo).".format(emp.getSueldo()))
+        else:
+            print("La persona con ese DNI no se encontró en el registro")
+
+    def modificarBasicoEPlanta(self, dni, nuevoBasico):
+        emp = self.buscaDni(dni)
+        if emp is not None:
+            if type(emp) == DePlanta:
+                emp.setSueldoBasico(nuevoBasico)
+            else:
+                print("El empleado con ese DNI no es De Planta")
+        else:
+            print("La persona con ese DNI no se encontró en el registro")
+
+    def modificarViaticoEExterno(self, dni, nuevoViatico):
+        emp = self.buscaDni(dni)
+        if emp is not None:
+            if type(emp) == Externos:
+                emp.setMontoViatico(nuevoViatico)
+            else:
+                print("El empleado con ese DNI no es Externo")
+        else:
+            print("La persona con ese DNI no se encontró en el registro")
+
+    def modificarValorEPorHora(self, nuevoValorHora):
+        Contratado.valorPorHora = nuevoValorHora
+        print("\n--Valor de pago por hora cambiado exitosamente--")
+
+    def testColeccion(self):
+        i = 0
+        cant = int(input("Ingrese cantidad de empleados:  "))
+        self.__arregloEmpleados = np.empty(cant, dtype=Empleado)
+
+        archivo = open("planta.csv")
+        reader = csv.reader(archivo, delimiter=";")
+        for fila in reader:
+            deplanta = DePlanta(fila[0], fila[1], fila[2], fila[3], int(fila[4]), int(fila[5]))
+            self.__arregloEmpleados[i] = deplanta
+            i += 1
+
+        valorhr = int(input("Ingrese valor por hora de los empleados contratados:  "))
+        Contratado.valorPorHora = valorhr
+        archivo = open("contratados.csv")
+        reader = csv.reader(archivo, delimiter=";")
+        for fila in reader:
+            fecha = fila[4]
+            fecha = fecha.split("/")
+            # Las fechas vienen en el archivo como "dia/mes/año"
+            añoinicio = datetime.date(int(fecha[2]), int(fecha[1]), int(fecha[0]))
+            fecha = fila[5]
+            fecha = fecha.split("/")
+            añofin = datetime.date(int(fecha[2]), int(fecha[1]), int(fecha[0]))
+            contratado = Contratado(fila[0], fila[1], fila[2], fila[3], añoinicio, añofin, int(fila[6]))
+            self.__arregloEmpleados[i] = contratado
+            i += 1
+
+        archivo = open("externos.csv")
+        reader = csv.reader(archivo, delimiter=";")
+        for fila in reader:
+            fecha = fila[5]
+            fecha = fecha.split("/")
+            añoinicio = datetime.date(int(fecha[2]), int(fecha[1]), int(fecha[0]))
+            fecha = fila[6]
+            fecha = fecha.split("/")
+            añofin = datetime.date(int(fecha[2]), int(fecha[1]), int(fecha[0]))
+            externo = Externos(fila[0], fila[1], fila[2], fila[3], fila[4], añoinicio, añofin, int(fila[7]),
+                               int(fila[8]),
+                               int(fila[9]))
+            self.__arregloEmpleados[i] = externo
+            i += 1
