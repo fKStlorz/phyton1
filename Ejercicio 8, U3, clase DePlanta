@@ -1,0 +1,24 @@
+from Empleado import Empleado
+
+class DePlanta(Empleado):
+    __sueldoB = 0
+    __antiguedad = 0
+
+    def __init__(self, dni, nb, dir, tel, sueldob, ant):
+        super().__init__(dni, nb, dir, tel)
+        self.__sueldoB = sueldob
+        self.__antiguedad = ant
+
+    def getSueldoBasico(self):
+        return self.__sueldoB
+
+    def getAntiguedad(self):
+        return self.__antiguedad
+
+    def setSueldoBasico(self, nuevo):
+        self.__sueldoB = nuevo
+        print("Sueldo basico cambiado con exito")
+
+    def calculaSueldo(self):
+        sueldo = self.__sueldoB + ((1 * self.__sueldoB) / 100) * self.__antiguedad
+        return sueldo
