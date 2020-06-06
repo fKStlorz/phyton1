@@ -1,0 +1,43 @@
+from Empleado import Empleado
+import datetime
+
+
+class Externos(Empleado):
+    __tarea = ""
+    __fechaInicio = datetime
+    __fechaFinalizacion = datetime
+    __montoViatico = 0
+    __costoObra = 0
+    __montoSeguro = 0
+
+    def __init__(self, dni, nb, dir, tel, tarea, finicio, ffin, montov, costo, montos):
+        super().__init__(dni, nb, dir, tel)
+        self.__tarea = tarea
+        self.__fechaInicio = finicio
+        self.__fechaFinalizacion = ffin
+        self.__montoViatico = montov
+        self.__costoObra = costo
+        self.__montoSeguro = montos
+
+    def getTarea(self):
+        return self.__tarea
+
+    def getMontoViatico(self):
+        return self.__montoViatico
+
+    def getCostoObra(self):
+        return self.__costoObra
+
+    def getMontoSeguro(self):
+        return self.__montoSeguro
+
+    def getFechaFinalizacion(self):
+        return self.__fechaFinalizacion
+
+    def setMontoViatico(self, nuevo):
+        self.__montoViatico = nuevo
+        print("Monto viatico cambiado con exito")
+
+    def calculaSueldo(self):
+        sueldo = self.__costoObra - self.__montoViatico - self.__montoSeguro
+        return sueldo
