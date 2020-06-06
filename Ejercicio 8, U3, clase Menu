@@ -1,0 +1,107 @@
+from ITesorero import ITesorero
+from IGerente import IGerente
+
+
+class Menu:
+    __switcher = None
+
+    def __init__(self):
+        self.__switcher = {1: self.opcion1,
+                           2: self.opcion2,
+                           3: self.opcion3,
+                           4: self.opcion4,
+                           5: self.opcion5,
+                           6: self.opcion6,
+                           7: self.opcion7
+                           }
+
+    def getSwitcher(self):
+        return self.__switcher
+
+    def ingresaUsuario(self):
+        lis = []
+        user = input("Ingrese usuario:  ")
+        lis.append(user)
+        contraseña = input("Ingrese contraseña:  ")
+        lis.append(contraseña)
+        return lis
+
+
+    def opcion(self, op, col):
+        func = self.__switcher.get(op, lambda: print("Opción no válida"))
+        func(col)
+
+    def opcion1(self, col):
+        dni = input("Ingrese DNI del empleado:  ")
+        hr = int(input("Ingrese horas que esta persona trabajó:  "))
+        col.registraHoras(dni, hr)
+        input()
+
+    def opcion2(self, col):
+        tarea = input("Ingrese la tarea a revisar:  ")
+        total = col.totalTarea(tarea)
+        if total == 0:
+            print("\nNo hay tareas con ese nombre o ya finalizaron\n")
+        else:
+            print("\nMonto total a pagar por esa tarea: {}\n".format(total))
+        input()
+
+    def opcion3(self, col):
+        col.ayudaEmpresa()
+
+    def opcion4(self, col):
+        col.verEmpleados()
+
+    def tesorero(self, col):
+        dni = input("Ingrese DNI del empleado a ver la informacion:  ")
+        col.gastosSueldoPorEmpleado(dni)
+
+    def opcion5(self, col):
+        print("-- Tesorero --")
+        cuenta = self.ingresaUsuario()
+        if cuenta[0] == "uTesorero" and cuenta[1] == "ag@74ck":
+            print("-- Usuario y contraseña correcta para tesorero --")
+            self.tesorero(ITesorero(col))
+        else:
+            print("-- Usuario o contraseña incorrecta --")
+        input()
+
+    def gerente(self, col):
+        op = 0
+        while op != 4:
+            print("-- Menu de opciones para gerente --")
+            print("1- Modificar sueldo basico de un empleado de planta")
+            print("2- Modificar valor de monto viatico de empleado externo")
+            print("3- Modificar valor que se paga por hora de empleado contratado")
+            print("4- Finalizar")
+            op = int(input("Ingrese opcion:  "))
+            if op == 1:
+                dni = input("Ingrese DNI del empleado:  ")
+                sueldob = int(input("Ingrese nuevo sueldo basico:  "))
+                col.modificarBasicoEPlanta(dni, sueldob)
+            elif op == 2:
+                dni = input("Ingrese DNI del empleado:  ")
+                montov = int(input("Ingrese nuevo monto viatico:  "))
+                col.modificarViaticoEExterno(dni, montov)
+            elif op == 3:
+                valorporh = int(input("Ingrese nuevo valor por hora:  "))
+                while valorporh < 1:
+                    valorporh = int(input("Valor incorrecto, no puede ser negativo, ingrese nuevamente:  "))
+                col.modificarValorEPorHora(valorporh)
+            elif op == 4:
+                print("Saliendo del menu de gerente")
+            else:
+                print("Opcion incorrecta")
+
+    def opcion6(self, col):
+        print("-- Gerente --")
+        cuenta = self.ingresaUsuario()
+        if cuenta[0] == "uGerente" and cuenta[1] == "ufC77#!1":
+            print("-- Usuario y contraseña correcta para gerente --")
+            self.gerente(IGerente(col))
+        else:
+            print("-- Usuario o contraseña incorrecta --")
+        input()
+
+    def opcion7(self, col):
+        print("Finaliza el programa")
