@@ -1,0 +1,106 @@
+from tkinter import *
+from tkinter import ttk, font, messagebox
+
+
+class App:
+    __ventana = None
+    __kg = None
+    __altura = None
+    __imc = None
+    __pesofinal = None
+
+    def __init__(self):
+        self.__ventana = Tk()
+        self.__ventana.title("Calculadora IMC")
+        self.__ventana.geometry("700x350")
+        self.__ventana.resizable(0, 0)
+        titulo = font.Font(weight="bold", size=17)
+        texto = font.Font(size=11)
+        textonegrita = font.Font(size=11, weight="bold")
+
+        # Creacion de labels, entrys, botones y separadores
+
+        self.msjPrincipalLb = ttk.Label(self.__ventana, text="Calculadora de IMC", font=titulo, padding=(5, 5))
+        self.__kg = StringVar()
+        self.__altura = StringVar()
+        self.__imc = DoubleVar()
+        self.__pesofinal = StringVar()
+        self.separ1 = ttk.Separator(self.__ventana, orient=HORIZONTAL)
+        self.separ2 = ttk.Separator(self.__ventana, orient=HORIZONTAL)
+        self.separ3 = ttk.Separator(self.__ventana, orient=HORIZONTAL)
+        self.alturaLb = ttk.Label(self.__ventana, text="Altura:", font=texto, padding=(5, 5))
+        self.pesoLb = ttk.Label(self.__ventana, text="Peso:", font=texto, padding=(5, 5))
+        self.cmLb = ttk.Label(self.__ventana, text="cm", font=texto, background="#CFD2CF", padding=(5, 1))
+        self.kgLb = ttk.Label(self.__ventana, text="kg", font=texto, background="#CFD2CF", padding=(5, 1))
+        self.kgEntry = ttk.Entry(self.__ventana, textvariable=self.__kg, width=65)
+        self.alturaEntry = ttk.Entry(self.__ventana, textvariable=self.__altura, width=65)
+        self.boton1 = Button(self.__ventana, text="Calcular", padx=60, pady=5, background="#08B405", foreground="white",
+                             command=self.calcular)
+        self.boton2 = Button(self.__ventana, text="Limpiar", padx=60, pady=5, background="#08B405", foreground="white",
+                             command=self.limpiar)
+        self.frame = ttk.Frame(self.__ventana, width=345, height=70)
+        self.fondoLb = ttk.Label(self.frame, padding=(345, 70), background="#33FF8D")
+        self.textoLb = ttk.Label(self.frame, text="Tu indice de Masa Corporal (IMC) es", font=texto,
+                                 background="#33FF8D", padding=(5, 5))
+        self.imcLb = ttk.Label(self.frame, textvariable=self.__imc, font=textonegrita, padding=(5, 5),
+                               background="#33FF8D")
+        self.pesofinalLb = ttk.Label(self.frame, textvariable=self.__pesofinal, font=texto, background="#33FF8D",
+                                     padding=(5, 5))
+        self.kgm2Lb = ttk.Label(self.frame, text="Kg/m2", font=textonegrita, background="#33FF8D", padding=(2, 5))
+
+        # Posicionamiento de los anteriores con place
+
+        # ventana principal
+        self.msjPrincipalLb.place(x=230, y=10)
+        self.separ1.place(x=50, y=50, bordermode=OUTSIDE, height=0, width=560)
+        self.alturaLb.place(x=70, y=70)
+        self.alturaEntry.place(x=140, y=75)
+        self.cmLb.place(x=535, y=74)
+        self.separ2.place(x=50, y=125, bordermode=OUTSIDE, height=0, width=560)
+        self.pesoLb.place(x=70, y=140)
+        self.kgEntry.place(x=140, y=145)
+        self.kgLb.place(x=535, y=144)
+        self.separ3.place(x=50, y=195, bordermode=OUTSIDE, height=0, width=560)
+        self.boton1.place(x=125, y=205)
+        self.boton2.place(x=360, y=205)
+        self.__ventana.mainloop()
+
+    def calcular(self):
+        try:
+            valor1 = float(self.alturaEntry.get())
+            valor1 = valor1 / 100
+            try:
+                valor2 = float(self.kgEntry.get())
+                valorfinal = valor2 / (valor1 * valor1)
+                valorfinal = round(valorfinal, 2)
+                self.__imc.set(valorfinal)
+                if self.__imc.get() < 18.5:
+                    self.__pesofinal.set("Peso inferior al normal")
+                elif self.__imc.get() < 24.9:
+                    self.__pesofinal.set("Peso Normal")
+                elif self.__imc.get() < 29.9:
+                    self.__pesofinal.set("Peso superior al normal")
+                else:
+                    self.__pesofinal.set("Obesidad")
+                self.frame.place(x=150, y=250)
+                self.fondoLb.place(x=0, y=0)
+                self.textoLb.place(x=5, y=5)
+                self.imcLb.place(x=248, y=5)
+                self.kgm2Lb.place(x=290, y=5)
+                self.pesofinalLb.place(x=105, y=35)
+
+            except:
+                messagebox.showerror(title="Error peso", message="Error valor de peso, ingrese un numero correcto")
+                self.__kg.set("")
+                self.kgEntry.focus()
+        except:
+            messagebox.showerror(title="Error altura", message="Error valor de altura, ingrese un numero correcto")
+            self.__altura.set("")
+            self.__kg.set("")
+            self.alturaEntry.focus()
+
+    def limpiar(self):
+        self.__kg.set("")
+        self.__altura.set("")
+        self.frame.place(x=1000, y=0)
+        self.alturaEntry.focus()
