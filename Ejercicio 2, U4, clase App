@@ -1,0 +1,56 @@
+from tkinter import ttk, Tk, StringVar, messagebox
+from tkinter.constants import *
+import requests
+
+
+class App:
+    __ventana = None
+    __valorDolar = None
+    __valorPesos = None
+
+    def __init__(self):
+        self.__ventana = Tk()
+        self.__ventana.geometry("300x150")
+        self.__ventana.title("Conversor de moneda")
+        self.__ventana.resizable(0, 0)
+        self.__valorPesos = StringVar()
+        self.__valorDolar = StringVar()
+        self.__valorDolar.trace("w", self.calcularDolar)
+
+        # creacion
+        frame = ttk.Frame(self.__ventana, width=300, height=150)
+        self.dolarEntry = ttk.Entry(frame, textvariable=self.__valorDolar, width=7)
+        self.dolarLb = ttk.Label(frame, text="dólares", padding=(5, 5))
+        self.equivLb = ttk.Label(frame, text="es equivalente a", padding=(5, 5))
+        self.pesosLb = ttk.Label(frame, text="pesos", padding=(5, 5))
+        self.botonSalir = ttk.Button(frame, text="Salir", command=self.__ventana.destroy)
+        self.muestraLb = ttk.Label(frame, textvariable=self.__valorPesos, padding=(5, 5))
+
+        # posicionamiento
+        frame.place(x=0, y=0)
+        self.dolarEntry.place(x=150, y=15)
+        self.dolarLb.place(x=200, y=12)
+        self.equivLb.place(x=35, y=60)
+        self.pesosLb.place(x=200, y=60)
+        self.botonSalir.place(x=200, y=100)
+        self.muestraLb.place(x=140, y=60)
+        self.__ventana.mainloop()
+
+    def calcularDolar(self, *args):
+        complete_url = "https://www.dolarsi.com/api/api.php?type=dolar"
+        r = requests.get(complete_url)
+        v = r.json()
+        v = v[0]
+        v = v["casa"]["venta"]
+        v = v.split(",")
+        if self.__valorDolar.get() != "":
+            try:
+                valor1 = float(self.__valorDolar.get())
+                self.__valorPesos.set(v[0] + "." + v[1])
+                self.__valorPesos.set(round(float(self.__valorPesos.get())*float(valor1), 2))
+            except:
+                messagebox.showerror(title="Error valor", message="Error valor de dolar, ingrese un numero correcto")
+                self.__valorDolar.set("")
+                self.dolarEntry.focus()
+        else:
+            self.__valorPesos.set("")
