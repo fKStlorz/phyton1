@@ -1,0 +1,113 @@
+from tkinter import ttk, Tk, StringVar, font
+from tkinter.constants import *
+import requests
+import datetime
+import json
+from pathlib import Path
+
+
+class App:
+    __ventana = None
+    __fechahora = None
+
+    def __init__(self):
+        self.__ventana = Tk()
+        self.__ventana.geometry("450x370")
+        self.__ventana.title("Cotizaciones dolar")
+        self.__lista = StringVar()
+        self.__fechahora = StringVar()
+        fuente1 = font.Font(weight="bold", size=8)
+
+        # obtencion de la hora con el json
+        try:
+            with Path("fechahora.json").open(encoding="UTF-8") as fuente:
+                d = json.load(fuente)
+                fuente.close()
+            self.__fechahora.set(d["FechaHora"])
+            x = d["datos"]
+        except:
+            # aca solo entra la primera vez que se inicia el programa, es decir sin tener el archivo fechahora.json
+            complete_url = "https://www.dolarsi.com/api/api.php?type=valoresprincipales"
+            r = requests.get(complete_url)
+            x = r.json()
+            fecha = datetime.date.today()
+            hora = datetime.datetime.today()
+            self.__fechahora.set("{}/{}/{} a la/s {}:{}:{}".format(fecha.day, fecha.month, fecha.year, hora.hour, hora.minute, hora.second))
+
+        # creacion
+        self.frame = ttk.Frame(self.__ventana, width=450, height=370)
+        self.tipoDolarLb = ttk.Label(self.frame, text="Tipo de dolar", padding=(5, 5))
+        self.compraLb = ttk.Label(self.frame, text="Compra", padding=(5, 5))
+        self.ventaLb = ttk.Label(self.frame, text="Venta", padding=(5, 5))
+        self.dOficialLb = ttk.Label(self.frame, text="Dolar Oficial", padding=(5, 5))
+        self.dBlueLb = ttk.Label(self.frame, text="Dolar Blue", padding=(5, 5))
+        self.dSojaLb = ttk.Label(self.frame, text="Dolar Soja", padding=(5, 5))
+        self.dContadoLb = ttk.Label(self.frame, text="Dolar Contado\ncon Liquidacion", padding=(5, 5))
+        self.dBolsaLb = ttk.Label(self.frame, text="Dolar Bolsa", padding=(5, 5))
+        self.actualizaButton = ttk.Button(self.frame, text="Actualizar", command=self.actualizar, padding=(12, 7))
+        self.salirButton = ttk.Button(self.frame, text="Salir", command=self.__ventana.destroy, padding=(12, 7))
+        self.separ1 = ttk.Separator(self.frame, orient=VERTICAL)
+        self.separ2 = ttk.Separator(self.frame, orient=VERTICAL)
+        self.separ3 = ttk.Separator(self.frame, orient=VERTICAL)
+        i = 0
+        self.compra1Lb = ttk.Label(self.frame, text=x[i]["casa"]["compra"], padding=(5, 5))
+        self.venta1Lb = ttk.Label(self.frame, text=x[i]["casa"]["venta"], padding=(5, 5))
+        i += 1
+        self.compra2Lb = ttk.Label(self.frame, text=x[i]["casa"]["compra"], padding=(5, 5))
+        self.venta2Lb = ttk.Label(self.frame, text=x[i]["casa"]["venta"], padding=(5, 5))
+        i += 1
+        self.compra3Lb = ttk.Label(self.frame, text=x[i]["casa"]["compra"], padding=(5, 5))
+        self.venta3Lb = ttk.Label(self.frame, text=x[i]["casa"]["venta"], padding=(5, 5))
+        i += 1
+        self.compra4Lb = ttk.Label(self.frame, text=x[i]["casa"]["compra"], padding=(5, 5))
+        self.venta4Lb = ttk.Label(self.frame, text=x[i]["casa"]["venta"], padding=(5, 5))
+        i += 1
+        self.compra5Lb = ttk.Label(self.frame, text=x[i]["casa"]["compra"], padding=(5, 5))
+        self.venta5Lb = ttk.Label(self.frame, text=x[i]["casa"]["venta"], padding=(5, 5))
+        self.actu1Lb = ttk.Label(self.frame, text="Ultima actualizacion:", padding=(5, 5), font=fuente1)
+        self.actu2Lb = ttk.Label(self.frame, textvariable=self.__fechahora, padding=(5, 5), font=fuente1)
+
+        # posicionamiento
+        self.frame.place(x=0, y=0)
+        self.tipoDolarLb.place(x=75, y=5)
+        self.compraLb.place(x=210, y=5)
+        self.ventaLb.place(x=320, y=5)
+        self.dOficialLb.place(x=75, y=50)
+        self.dBlueLb.place(x=75, y=95)
+        self.dSojaLb.place(x=75, y=140)
+        self.dContadoLb.place(x=75, y=185)
+        self.dBolsaLb.place(x=75, y=240)
+        self.actualizaButton.place(x=110, y=290)
+        self.salirButton.place(x=240, y=290)
+        self.separ1.place(x=185, y=10, bordermode=OUTSIDE, height=260, width=0)
+        self.separ2.place(x=290, y=10, bordermode=OUTSIDE, height=260, width=0)
+        self.separ3.place(x=395, y=10, bordermode=OUTSIDE, height=260, width=0)
+        self.compra1Lb.place(x=205, y=50)
+        self.venta1Lb.place(x=305, y=50)
+        self.compra2Lb.place(x=205, y=95)
+        self.venta2Lb.place(x=305, y=95)
+        self.compra3Lb.place(x=205, y=140)
+        self.venta3Lb.place(x=305, y=140)
+        self.compra4Lb.place(x=205, y=185)
+        self.venta4Lb.place(x=305, y=185)
+        self.compra5Lb.place(x=205, y=240)
+        self.venta5Lb.place(x=305, y=240)
+        self.actu1Lb.place(x=5, y=340)
+        self.actu2Lb.place(x=120, y=340)
+        self.__ventana.mainloop()
+
+    def actualizar(self):
+        complete_url = "https://www.dolarsi.com/api/api.php?type=valoresprincipales"
+        r = requests.get(complete_url)
+        x = r.json()
+
+        # guardar y actualizar fecha y hora actual, ademas de los datos de cotizacion
+        fecha = datetime.date.today()
+        hora = datetime.datetime.today()
+        fechahora = "{}/{}/{} a la/s {}:{}:{}".format(fecha.day, fecha.month, fecha.year, hora.hour, hora.minute,
+                                                      hora.second)
+        d = {"FechaHora": fechahora, "datos": x}
+        with Path("fechahora.json").open("w", encoding="UTF-8") as destino:
+            json.dump(d, destino, indent=4)
+            destino.close()
+        self.__fechahora.set(fechahora)
