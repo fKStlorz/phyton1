@@ -1,0 +1,52 @@
+class Fraccion:
+    __numerador = 0
+    __denominador = 0
+
+    def __init__(self, n, d=1):
+        self.__numerador = n
+        self.__denominador = d
+
+    def getNumerador(self):
+        return self.__numerador
+
+    def getDenominador(self):
+        return self.__denominador
+
+    def __add__(self, otro):
+        numerador = self.__numerador * otro.getDenominador() + self.__denominador * otro.getNumerador()
+        denominador = self.__denominador * otro.getDenominador()
+        return self.simplificar(numerador, denominador)
+
+    def __sub__(self, otro):
+        numerador = self.__numerador * otro.getDenominador() - self.__denominador * otro.getNumerador()
+        denominador = self.__denominador * otro.getDenominador()
+        return self.simplificar(numerador, denominador)
+
+    def __mul__(self, otro):
+        numerador = self.__numerador * otro.getNumerador()
+        denominador = self.__denominador * otro.getDenominador()
+        return self.simplificar(numerador, denominador)
+
+    def __truediv__(self, otro):
+        numerador = self.__numerador * otro.getDenominador()
+        denominador = self.__denominador * otro.getNumerador()
+        return self.simplificar(numerador, denominador)
+
+    def simplificar(self, n, d):
+        band = False
+        if n != d:
+            z = max(n, d)
+            while not band:
+                if z % n == 0 and z % d == 0:
+                    band = True
+                else:
+                    z += 1
+            n = z // n
+            d = z // d
+            if n == 1:
+                resultado = str(d)
+            else:
+                resultado = "{}/{}".format(d, n)
+        else:
+            resultado = "1"
+        return resultado
