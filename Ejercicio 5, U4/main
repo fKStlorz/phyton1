@@ -1,0 +1,18 @@
+from repositorio import RespositorioPacientes
+from vistaPaciente import ContactsView
+from controlador import ControladorPacientes
+from decodificador import ObjectEncoder
+
+
+def main():
+    conn = ObjectEncoder("pacientes.json")
+    repo = RespositorioPacientes(conn)
+    vista = ContactsView()
+    ctrl = ControladorPacientes(repo, vista)
+    vista.setControlador(ctrl)
+    ctrl.start()
+    ctrl.salirGrabarDatos()
+
+
+if __name__ == "__main__":
+    main()
