@@ -1,0 +1,59 @@
+import re
+
+
+class Paciente:
+    __nombre = ""
+    __apellido = ""
+    __telefono = ""
+    __altura = ""
+    __peso = ""
+
+    def __init__(self, apellido, nombre, telefono, altura, peso):
+        self.__nombre = self.verifica(nombre, "Nombre es un valor necesario")
+        self.__apellido = self.verifica(apellido, "Apellido es un valor necesario")
+        self.__telefono = self.verificaTel(telefono, "Error formato de telefono")
+        self.__altura = self.verificaNum(altura, "Error formato de altura")
+        self.__peso = self.verificaNum(peso, "Error formato de peso")
+
+    def getApellido(self):
+        return self.__apellido
+
+    def getNombre(self):
+        return self.__nombre
+
+    def getTelefono(self):
+        return self.__telefono
+
+    def getAltura(self):
+        return self.__altura
+
+    def getPeso(self):
+        return self.__peso
+
+    def verifica(self, v, msj):
+        if not v:
+            raise ValueError(msj)
+        return v
+
+    def verificaTel(self, v, msj):
+        if not v or not re.match(r"\([0-9]{3}\)[0-9]{7}", v):
+            raise ValueError(msj)
+        return v
+
+    def verificaNum(self, v, msj):
+        if not v or not re.match("^[0-9]{1,3}$", v):
+            raise ValueError(msj)
+        return v
+
+    def toJSON(self):
+        d = dict(
+            __class__=self.__class__.__name__,
+            __atributos__=dict(
+                apellido=self.__apellido,
+                nombre=self.__nombre,
+                telefono=self.__telefono,
+                altura=self.__altura,
+                peso=self.__peso
+            )
+        )
+        return d
