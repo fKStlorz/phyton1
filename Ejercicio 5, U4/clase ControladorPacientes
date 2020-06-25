@@ -1,0 +1,70 @@
+from vistaPaciente import ContactsView, NewContact
+from ManejadorPacientes import ManejadorPacientes
+
+
+class ControladorPacientes(object):
+    def __init__(self, repo, vista):
+        self.repo = repo
+        self.vista = vista
+        self.seleccion = -1
+        self.pacientes = list(repo.obtenerListaPacientes())
+
+    # comandos de que se ejecutan a través de la vista
+    def crearPaciente(self):
+        nuevoPaciente = NewContact(self.vista).show()
+        if nuevoPaciente:
+            paciente = self.repo.agregarPaciente(nuevoPaciente)
+            self.pacientes.append(paciente)
+            self.vista.agregarPaciente(paciente)
+
+    def seleccionarPaciente(self, index):
+        self.seleccion = index
+        paciente = self.pacientes[index]
+        self.vista.verPacienteEnForm(paciente)
+
+    def modificarPaciente(self):
+        if self.seleccion == -1:
+            return
+        rowid = self.pacientes[self.seleccion].rowid
+        detallesPaciente = self.vista.obtenerDetalles()
+        detallesPaciente.rowid = rowid
+        contacto = self.repo.modificarPaciente(detallesPaciente)
+        self.pacientes[self.seleccion] = contacto
+        self.vista.modificarPaciente(contacto, self.seleccion)
+        self.seleccion = -1
+
+    def borrarPaciente(self):
+        if self.seleccion == -1:
+            return
+        paciente = self.pacientes[self.seleccion]
+        self.repo.borrarPaciente(paciente)
+        self.pacientes.pop(self.seleccion)
+        self.vista.borrarPaciente(self.seleccion)
+        self.seleccion = -1
+
+    def verImc(self):
+        if self.seleccion == -1:
+            return
+        paciente = self.pacientes[self.seleccion]
+        v1 = float(paciente.getAltura()) / 100
+        v2 = float(paciente.getPeso())
+        vfinal = v2 / (v1 * v1)
+        if vfinal < 18.5:
+            msj = "Peso inferior al normal"
+        elif vfinal < 24.9:
+            msj = "Peso Normal"
+        elif vfinal < 29.9:
+            msj = "Peso superior al normal"
+        else:
+            msj = "Obesidad"
+        vfinal = round(vfinal, 2)
+        lista = [vfinal, msj]
+        self.vista.verImc(lista)
+
+    def start(self):
+        for c in self.pacientes:
+            self.vista.agregarPaciente(c)
+        self.vista.mainloop()
+
+    def salirGrabarDatos(self):
+        self.repo.grabarDatos()
