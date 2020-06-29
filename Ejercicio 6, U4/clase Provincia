@@ -1,0 +1,69 @@
+import requests
+
+
+class Provincia:
+    __nombre = ""
+    __capital = ""
+    __habitantes = ""
+    __departamentos = ""
+
+    def __init__(self, nombre, capital, habitantes, departamentos):
+        self.__nombre = self.verificaNombre(nombre, "Nombre inválido de provincia")
+        self.__capital = self.verifica(capital, "Error formato capital")
+        self.__habitantes = self.verifica(habitantes, "Error formato habitantes")
+        self.__departamentos = self.verifica(departamentos, "Error formato departamentos")
+
+    def obtenerJson(self, p):
+        complete_url = "https://api.openweathermap.org/data/2.5/weather?q=" + p.lower() + "&units=metric&appid=55a81b14e1d058728bc865b70b6569d2"
+        r = requests.get(complete_url)
+        v = r.json()
+        return v
+
+    def getNombre(self):
+        return self.__nombre
+
+    def getCapital(self):
+        return self.__capital
+
+    def getHabitantes(self):
+        return self.__habitantes
+
+    def getDepartamentos(self):
+        return self.__departamentos
+
+    def getTemperatura(self):
+        v = self.obtenerJson(self.__nombre)
+        return v["main"]["temp"]
+
+    def getSensacionTermica(self):
+        v = self.obtenerJson(self.__nombre)
+        return v["main"]["feels_like"]
+
+    def getHumedad(self):
+        v = self.obtenerJson(self.__nombre)
+        return v["main"]["humidity"]
+
+    def verificaNombre(self, p, msj):
+        v = self.obtenerJson(p)
+        try:
+            v["main"]
+        except:
+            raise ValueError(msj)
+        return p
+
+    def verifica(self, p, msj):
+        if not p:
+            raise ValueError(msj)
+        return p
+
+    def toJSON(self):
+        d = dict(
+            __class__=self.__class__.__name__,
+            __atributos__=dict(
+                nombre=self.__nombre,
+                capital=self.__capital,
+                habitantes=self.__habitantes,
+                departamentos=self.__departamentos
+            )
+        )
+        return d
