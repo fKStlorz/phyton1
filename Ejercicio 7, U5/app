@@ -1,0 +1,23 @@
+from datetime import datetime
+from flask import Flask, request, render_template
+from flask_sqlalchemy import SQLAlchemy
+from werkzeug.security import generate_password_hash, check_password_hash
+
+app = Flask(__name__)
+app.config.from_pyfile("config.py")
+
+from models import db
+from models import Producto, Item, Pedido, Usuario
+
+
+@app.route("/")
+def saludo():
+    nuevo = Producto(NumProducto=1, Nombre="franco", PrecioUnitario=3)
+    db.session.add(nuevo)
+    db.session.commit()
+    return render_template("probando.html")
+
+
+if __name__ == "__main__":
+    db.create_all()
+    app.run(debug=True)
