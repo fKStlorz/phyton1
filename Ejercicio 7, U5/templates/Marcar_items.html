@@ -1,0 +1,37 @@
+{%extends "base.html"%}
+{% block title %}Marcar Items{% endblock %}
+	{% block content %}
+	{% if pedidos %}
+	<div class="ContenedorMarcarI">
+		<h1 align="center">Marcar Items en estado listo</h1><br>
+		<h2 align="center">Haga click en el numero de item de la izquierda para marcar el item</h2><br>
+		<form action="{{ url_for('Marcar_items') }}" method="POST">
+			{% for pedido in pedidos %}
+				<hr>
+				<div class="ContenedorPedidoC">
+				<h3>Pedido Numero {{ pedido.NumPedido }}</h3><br>
+				{% for item in pedido.Item %}
+					{% if item.Estado == "Pendiente" %}
+						<input type="submit" name="item" value="{{item.NumItem}}" class="BotonPendiente">
+						<label class="TextoItem">Nombre: {{prod[item.NumProducto-1].Nombre}} Estado: Pendiente</label><br><br>
+					{% else %}
+						<label class="BotonListo"> {{item.NumItem}} </label>
+						<label class="TextoItem">Nombre: {{prod[item.NumProducto-1].Nombre}} Estado: Listo</label><br><br>
+					{% endif %}
+				{% endfor %}
+				{% if pedido.Observacion %}
+						 <p class="TextoObservacion">Observacion: {{ pedido.Observacion }}</p>
+					{% else %}
+						<p class="TextoObservacion">Observacion: Ninguna</p>
+					{% endif %}
+				</div>
+			{% endfor %}
+	 	</form>
+	{% else %}
+	<h2 class="NohayItems">No hay pedidos realizados por el momento</h2>
+	{% endif %}
+	</div>
+	<div class="Cocinero_Cerrar_sesion">
+		<a href="{{url_for('Cerrar_sesion')}}" class="Boton_Login_Cerrar_Sesion">Cerrar sesión</a>
+    </div>
+{% endblock %}
