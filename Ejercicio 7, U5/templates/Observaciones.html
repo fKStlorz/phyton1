@@ -1,0 +1,12 @@
+{%extends "base.html"%}
+{% block title %}Observaciones{% endblock %}
+{% block content %}
+   <div class="ContenedorObservaciones">
+	   <form action="{{request.path}}" method="post">
+	   		<label for="Observaciones">Observaciones</label>
+	   		<input type="hidden" name="NumPedido" value="{{Pedido.NumPedido}}">
+	   		<textarea name="Observaciones" cols="30" rows="10" class="Campotexto"></textarea>
+	   		<input type="submit" name="FinalizarPedido" value="Finalizar pedido" class="Boton_Login_Cerrar_Sesion">
+	   </form>
+   </div>
+{% endblock %}
