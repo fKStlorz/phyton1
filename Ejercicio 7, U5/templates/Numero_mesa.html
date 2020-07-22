@@ -1,0 +1,20 @@
+{%extends "base.html"%}
+{% block title %}Mesa:{% endblock %}
+{% block content %}
+
+   <div class="ContenedorMesa">
+   {% if error %}
+            <div class="Error">
+               <p>
+                  <strong>Error:</strong>
+                  {{ error }}
+               </p>
+         </div>
+   {% endif %} 
+ 	  <form action="{{request.path}}" method="post">
+   			<label for="Mesa">Número de mesa:</label>
+   			<input type="text" name="Mesa" class="Campo">
+   			<input type="submit" value="Continuar" class="BotonVerde">
+   	  </form>
+   </div>
+{% endblock %}
