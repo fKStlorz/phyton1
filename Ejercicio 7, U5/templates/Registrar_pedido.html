@@ -1,0 +1,48 @@
+{%extends "base.html"%}
+{% block title %}Bienvenida{% endblock %}
+{% block content %}
+<div class="ContenedorRegistrarP">	 
+	 <div class="Carta">
+	  <table >
+	  		<thead>
+	  			<tr>
+	  				<th>Carta:</th>
+	  			</tr>
+		  	</thead>
+		  	<tbody>
+		  		<tr>
+		  			<td>
+						  <form action="{{request.path}}" method="post">
+						  <input type="hidden" name="NumPedido" value="{{Pedido.NumPedido}}">
+						  {% for prod in carta %}
+						  <input class="BotonVerde" type="submit" name="{{prod.NumProducto}}" value="{{prod.Nombre}} Precio: {{prod.PrecioUnitario}}">
+						  {% endfor %}
+						  <input type="submit" name="Finalizar" value="Finalizar" class="Boton_Login_Cerrar_Sesion">
+						  </form>
+		  			</td>
+		  		</tr>
+		  	</tbody>
+	  </table>
+	 </div>
+	  <div class="ListaItems">
+	  	<table >
+	  		<thead>
+	  			<tr>
+	  				<th>Items:</th>
+	  			</tr>
+		  	</thead>
+		  	<tbody>
+		  		<tr>
+		  			<td>
+					    <ul>
+					      {% for item in Pedido.Item%}
+					      <li>{{carta[item.NumProducto-1].Nombre}}</li>
+					      {% endfor %}
+					    </ul>  
+	 				</td>
+		  		</tr>
+		  	</tbody>
+	  	</table>				
+	  </div>
+</div>
+{% endblock %}
