@@ -2,6 +2,13 @@
 {% block title %}Bienvenida{% endblock %}
 {% block content %}
 <div class="ContenedorRegistrarP">	 
+	 	{% if error %}
+	   		<div class="Error">
+	   			<p>
+	   				<strong>{{ error }}</strong>
+	   			</p>
+			</div>
+	   	{% endif %}
 	 <div class="Carta">
 	  <table >
 	  		<thead>
