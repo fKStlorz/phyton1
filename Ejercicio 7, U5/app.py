@@ -87,10 +87,14 @@ def Registrar_pedido():
                                     DNIMozo=session.get('DNI'), Mesa=numeromesa)
                     db.session.add(pedido)
                     db.session.commit()
-                    return render_template('Registrar_pedido.html', carta=Producto.query.all(), items=None,
-                                           Pedido=pedido)
+                    return render_template('Registrar_pedido.html', carta=Producto.query.all(), Pedido=pedido)
             elif 'Finalizar' in valores:
-                return render_template('Observaciones.html', Pedido=pedido)
+                items = list(pedido.Item)
+                if len(items) == 0:
+                    return render_template('Registrar_pedido.html', carta=Producto.query.all(), Pedido=pedido,
+                                           error="No hay items en el pedido, no se puede finalizar aún.")
+                else:
+                    return render_template('Observaciones.html', Pedido=pedido)
             elif 'FinalizarPedido' in valores:
                 pedido.Observacion = request.form['Observaciones']
                 db.session.add(pedido)
