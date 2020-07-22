@@ -1,0 +1,23 @@
+{%extends "base.html"%}
+{% block title %}Login{% endblock %}
+{% block content %}
+<div class="ContenedorLoginMenu">
+	<h1 id="InicioSesion">Inicio de sesión</h1>
+		<div class="SubContenedorLogin">
+			{% if error %}
+	   		<div class="Error">
+	   			<p>
+	   				<strong>{{ error }}</strong>
+	   			</p>
+			</div>
+	   		{% endif %}
+			<form action="{{request.path}}" method="post">
+				<label for="DNI" >DNI:</label >
+				<input type="text" name="DNI" class="Campo">
+				<label for="Contraseña" id="Form1">Contraseña:</label>
+				<input type="password" name="Contraseña"  class="Campo">
+				<input type="submit"  value="Iniciar sesión" class="BotonVerde" id="BotonLogin">
+			</form>
+		</div>
+</div>
+{% endblock %}
