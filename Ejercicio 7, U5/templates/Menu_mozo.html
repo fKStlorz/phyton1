@@ -1,0 +1,15 @@
+{%extends "base.html"%}
+{% block title %}Menú{% endblock %}
+	{% block content %}
+	<div class="ContenedorLoginMenu">
+		<h1 class="Menu">Menú</h1>
+		<div class="SubContenedorMenu">
+			<ul>
+				  <li> <a href = "{{ url_for('Registrar_pedido') }}" class="BotonVerde" id="Pedido"> Registrar pedido. </a></li>
+				  <li> <a href = "{{ url_for('Visualizar_pedidos') }}"class="BotonVerde"> Visualizar listado de pedidos vigentes.</a></li>
+				  <li> <a href = "{{ url_for('Registrar_Cobro') }}"class="BotonVerde" id="Cobro"> Cobrar un pedido vigente.</a></li>
+				  <li><a href="{{url_for('Cerrar_sesion')}}" class="Boton_Login_Cerrar_Sesion" id="Cerrar_sesion1">Cerrar Sesión</a></li>
+			</ul>	
+		</div>
+	</div>
+    {% endblock %}
