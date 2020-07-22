@@ -77,6 +77,7 @@ font-size: 1.1em;}
 	text-align: center;
 	padding: 15px 8px;
 	margin-bottom: 10px;
+	border-radius: 10px;
 }
 .ContenedorLoginMenu .Menu{
 	margin: 5% auto 1% auto;
@@ -243,6 +244,11 @@ td{
 	min-width: 1000px;
 	margin:5% auto 0 auto;
 	overflow: hidden;
+}
+.ContenedorRegistrarP .Error{
+	width: 600px;
+	margin:10px auto;
+	font-size: 1.1em;
 }
 .Tabla2{
 	border-color:black;
