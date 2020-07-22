@@ -1,0 +1,54 @@
+ {%extends "base.html"%}
+{% block title %}Registrar cobro{% endblock %}
+{% block content %}
+<div class="ContenedorVisualizarP">
+	 <h1>Pedidos no cobrados </h1> 
+	{% if pedidos %}
+	<form action="{{url_for('Registrar_Cobro')}}" method="post">
+		{% if IDPedido %}
+			<div class="ContenedorCobro">		
+					<strong>¿ Desea realizar el cobro del pedido {{IDPedido}} ?</strong> 
+					<div class="Botones">
+					<input type="submit" name="Aceptar" value="Aceptar" class="BotonVerde" id="BotonAceptar">
+					<input type="submit" name="Cancelar" value="Cancelar" class="BotonVerde" id="BotonCancelar">
+					</div>
+					<input type="hidden" name="ID" value="{{IDPedido}}">
+			</div>
+		{% endif %}
+		<table>
+	    	   <thead>
+	        	    <tr>
+	            	   	<th>ID Pedido</th>
+	               	   	<th>Items</th>
+	                   	<th>Nro Mesa</th>
+	                	<th>DNI Mozo</th>
+	            	</tr>
+	           </thead>
+	        	<tbody>
+		         		{% for pedido in pedidos %}
+		            		{% if pedido.Cobrado == 0 %}
+		               		<tr>
+		                  		<td> <input type="submit" name="ID_Pedido" value="{{ pedido.NumPedido }}" class="BotonVerde" id="BotonesLista">
+		                  		</td>
+		                   		<td>
+		                   			{% for item in pedido.Item %}
+									{{ item.NumItem }} - {{prod[item.NumProducto-1].Nombre}} <br>
+		                   			{% endfor %}
+		                   		</td>
+						  		<td>{{ pedido.Mesa }}</td>
+		                   		<td>{{ pedido.DNIMozo }}</td>
+		               		</tr>
+		            		{% endif %}
+		         		{% endfor %}
+	         	</tbody>
+	     </table>
+    </form>
+	{% else %}
+	<br> <h2>No hay pedidos realizados por el momento</h2>
+	{% endif %}
+	<div class="Retorna_Menu">
+		<a href="{{url_for('Menu_Mozo')}}" class="Boton_Login_Cerrar_Sesion">Regresar al menú</a>
+	</div>
+</div>
+
+{% endblock %}
