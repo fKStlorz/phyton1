@@ -1,0 +1,22 @@
+{%extends "base.html"%}
+{% block title %}Menú{% endblock %}
+	{% block content %}
+	<div class="ContenedorCobro" id="ContenedorCobro2">
+		{% if Total %}
+		<h1>El total a cobrar es de: </h1>
+		<strong>$ {{Total}}</strong>
+		<h2>Desea confirmar el cobro:</h2>
+		 <form action="{{request.path}}" method="post">
+	   		<input type="hidden" name="Total" value="{{Total}}">
+	   		<input type="hidden" name="ID" value="{{ID_Pedido}}">
+	   		<div class="Botones">
+	   		<input type="submit" name="Confirmar" value="Aceptar" class="BotonVerde" id="BotonAceptar">
+	   		<input type="submit" name="Cancelar" value="Cancelar" class="BotonVerde" id="BotonCancelar">
+	   		</div>
+	   </form>
+		{% else %}
+		<p>No se puede llevar a cabo la operacion ya que hay items del pedido seleccionado que se encuentran Pendientes.</p>
+		<a href="{{ url_for('Registrar_Cobro') }}" class="Boton_Login_Cerrar_Sesion">Volver al listado</a>
+		{% endif %}
+	</div>
+    {% endblock %}
