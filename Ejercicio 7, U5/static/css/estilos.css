@@ -1,1 +1,410 @@
+*{
+	padding:0;
+	margin:0;}
+body{
+	background-color:#f9f9f9;
+	font-size: 16px; 
+	font-family: arial;
+}
+body.Bienvenida{
+background-color: #e1704b;
+color: white;
+font-size: 1.1em;}
+.ContenedorBienvenida {
+	background-color: #ce6542;
+	margin:230px auto;
+	padding: 40px 40px 5px 40px; 
+	width: 600px;
+	box-sizing: content-box;
+}										 /* CSS BIENVENIDA*/
+.Boton_Login_Cerrar_Sesion{
+	text-decoration: none;
+	border-radius: 10px;
+	background-color:#39a9a4;
+	padding: 15px 10px;
+	color: white;
+	font-size: 1.2em;
+	display: inline-block;}
+.Boton_Login_Cerrar_Sesion:hover{
+	background-color:#3a9a96;}
+.Boton1{
+	width: 150px;
+	margin:20px auto;
+}
+.ContenedorLoginMenu{
+	padding: 40px;
+	height: 500px;
+}
+.ContenedorLoginMenu #InicioSesion{ 	 /* CSS LOGIN */
+	margin:0 auto;
+	width: 250px;
+}
+.SubContenedorLogin{
+	background: white;
+	width: 300px;
+	border-radius: 10px;
+	margin:50px auto;
+	padding: 35px 40px;
+	border-style: solid;
+	border-color: #3f48cc;
+}
+.Campo{
+	border-radius:5px;
+	height:2em;
+	width: 20.5em;
+	border-style: solid;
+	margin-bottom: 30px;
+	margin-left: 10px; }
+.SubContenedorLogin form label{
+	margin-left: 10px;}
+.BotonVerde{
+	text-decoration: none;
+	background-color: #2ea44f;
+	border-style: none;
+	border-radius: 5px;
+	color: white;
+	font-size: 1.2em;
+	padding: 10px 10px;}
+.BotonVerde:hover{
+	background-color:#187933;}
+#BotonLogin{
+	margin:0 auto;
+	width: 130px;
+	display: block;
+}
+.Error{
+	background: #ffbac1;
+	text-align: center;
+	padding: 15px 8px;
+	margin-bottom: 10px;
+}
+.ContenedorLoginMenu .Menu{
+	margin: 5% auto 1% auto;
+	text-decoration: underline;
+	width:90px;
+}
+.SubContenedorMenu{
+	background: #ff8b13b8;
+	width:500px;                      /*CSS MENU_MOZO */
+	height:70%;
+	border-radius:10px;
+	margin:0 auto;
+	padding:50px 50px;
+	box-sizing: border-box;
+}
+.SubContenedorMenu ul li{
+	list-style: none;
+	margin-bottom: 45px;
+	margin-left: 30px;
+	font-size: 16px;
+}
+#Pedido{
+	margin-left: 23%;
+}
+#Cobro{
+	margin-left: 13%;
+}
+#Cerrar_sesion1{
+	margin-left: 26%;
+	margin-top: 2%;
+}
+table, th, td {
+  border: 2px solid #375C36;
+  border-collapse: collapse;
+  padding: 2px 5px;
+  margin:20px auto;
+  font-family: Arial;
+  font-size: 16px;
+}
+th{
+  text-align: center;          /* CSS LISTADO PEDIDOS VIGENTES*/
+  color: white;
+  padding: 6px 30px;
+  background-color: #4CAF50;
+}
+td{
+    text-align: center;
+    background-color: #FFFFFF;
+}
 
+.ContenedorVisualizarP {
+    margin-bottom: 2px;
+    margin-left: 4px;
+    margin-top: 50px;
+    position: relative;
+ }
+.ContenedorVisualizarP h1{
+    text-align: center;
+    font-style: italic;
+    margin:20px auto;
+    border: 2px solid black;
+    width: 300px;
+    border-radius: 8px;
+    background-color: #FFFFFF;
+}
+.ContenedorVisualizarP h2{
+    text-align: center;
+    font-style:italic;
+    width: 500px;
+    border: 2px solid black;
+    margin:0 auto;
+}
+.ContenedorMarcarI{
+    margin:50px auto;
+    width: 800px;
+    background-color: #FFFFFF;			/* CSS MARCAR ITEMS*/
+    border: 2px solid #B6B6B6;
+    border-radius: 8px;
+}
+.ContenedorMarcarI h1{
+    font-style: italic;
+    text-decoration: underline;
+}
+.ContenedorMarcarI h2{
+    font-style: italic;
+}
+.ContenedorMarcarI h3{
+    text-align: center;
+    font-family: Arial;
+    margin-top: 7px;
+}
+.ContenedorMarcarI h4{
+    text-family: Arial;
+    text-align: left;
+    margin-left: 210px;
+    margin-down: 1px;
+    background-color: #ddd;
+    margin-right: 300px;
+}
+
+.NohayItems{
+	text-align: center;
+	margin: 50px auto;
+}
+.Cocinero_Cerrar_sesion{
+	width: 135px;
+	margin: 20px auto;
+}
+.ContenedorPedidoC{
+	width: 60%;
+	margin: 0 auto;
+	padding: 10px 5px;
+}
+.BotonPendiente,.BotonListo{
+    background-color: #47a9b3;
+    color: white;
+    padding: 8px 13px;
+    margin-top: 2px;
+    margin: 2px 0 0 30px;
+    border-radius: 5px;
+    border-style: none;
+}
+.BotonPendiente:hover{
+	background: #277077;
+}
+.BotonListo{
+    padding: 5.5px 10px;
+    background-color: #137C1F;
+    color: white;
+}
+.TextoItem{
+    text-family: Arial;
+    margin-left: 10px;
+}
+.TextoObservacion{
+    text-align: center;
+}
+
+.ContenedorMesa{
+	background: white;
+	width: 23%;
+	margin: 15% auto 0 auto;
+	padding: 40px 38px;
+	border-radius: 10px;
+	border-color: #f7a61294;
+	border-style:solid;}
+.ContenedorMesa form label{
+	font-size: 1.8em;
+	margin-left: 16px;                       /*CSS REGISTRAR PEDIDO */
+}
+.ContenedorMesa .Campo{
+	width: 14%;
+	margin: 0px 3px 8px 1px;
+	text-align: center;
+}
+.ContenedorMesa .Error{
+	padding: 10px 4px;
+}
+.ContenedorMesa form .BotonVerde{
+	margin-left: 34%;
+}
+.ContenedorRegistrarP{
+	width: 1100px;
+	min-width: 1000px;
+	margin:5% auto 0 auto;
+	overflow: hidden;
+}
+.Tabla2{
+	border-color:black;
+}
+.Carta{
+	width: 40%;
+	float: left;
+	margin-left: 5%;
+}
+.Carta th{
+	background:#ff8b13b8;
+	font-size: 2em;
+}
+.ContenedorRegistrarP table{
+	width: 80%;
+	margin-left: 10%;
+}
+.Carta .BotonVerde{
+	margin-top: 5%;
+}
+.Carta .Boton_Login_Cerrar_Sesion{
+	border-style:none;
+	display: block;
+	margin: 9% 0% 5% 35%;
+}
+.ListaItems{
+	width: 40%;
+	float: right;
+	margin-right: 5%;
+}
+.ListaItems th{
+	font-size: 2em;
+}
+.ListaItems tbody td{
+	padding: 5% 0px;
+}
+.ListaItems ul li{
+	list-style:none;
+	margin: 5% 0% 3% 28%;
+	border:solid 2px green;
+	box-sizing: content-box;
+	width: 40%;
+	background: #cddc3963;
+	padding: 2px 2px;
+	font-size: 1.2em;
+	border-radius:5px;
+	
+}
+
+.ContenedorObservaciones{
+	margin:9% 35% 10% 35%;
+	width:370px;
+	background:white;
+	font-size: 2em;
+	border-color: orange;
+	border-radius: 10px;
+	border-style: solid;
+	padding: 25px 40px;
+	font-style: "Arial";
+	box-sizing: border-box;}
+
+.ContenedorObservaciones label{
+	margin-left: 12%;
+}
+.ContenedorObservaciones .Campotexto{
+	min-width: 280px;
+	max-width: 280px;
+	height: 150px;
+	min-height: 150px;
+	font-size: 0.6em;
+	max-height: 250px;
+	margin-top: 5%;
+}
+.ContenedorObservaciones .Boton_Login_Cerrar_Sesion{
+	font-size: 0.6em;
+	border-style: none;
+	margin-top: 5%;
+	margin-left: 21.5%;}
+
+															/* CSS REGISTRAR COBRO*/
+.ContenedorCobro{
+	width: 450px;
+	background:#fbae008a;
+	margin: 0 auto;
+	padding: 20px 30px;
+	padding-bottom: 10px;
+	border-radius: 10px;
+}
+.ContenedorCobro strong{
+	font-size: 1.4em;
+	margin-top: 10px;
+	display: block;
+	text-align: center;
+}
+#BotonesLista{
+	padding: 5px 6px;
+	font-size: 1em;
+}
+.ContenedorCobro .Botones{
+	margin:15px auto;
+	width: 65%;
+	overflow: hidden;
+}
+#BotonCancelar{
+	float: right;
+}
+#BotonAceptar{
+float: left;
+}
+#ContenedorCobro2{
+	margin-top: 200px;
+	padding: 30px 40px;
+}
+#ContenedorCobro2 h1{
+	margin:10px 25px;
+	text-align: center;
+}
+#ContenedorCobro2 h2{
+	text-align: center;
+}
+#ContenedorCobro2 p{
+	font-size: 1.3em;
+	display: inline-block;
+	text-align: center;
+}
+#BotonConfirmar{
+	margin-right: 70px;
+}
+#ContenedorCobro2 strong{
+	margin:10px 0% 15px 35% ;
+	display: inline-block;
+	border-style: solid;
+	padding: 10px 20px;
+	background: white;
+	border-radius: 10px;}
+
+#ContenedorCobro2 .Boton_Login_Cerrar_Sesion{
+	margin: 10px auto;
+	margin-left: 30%;
+	margin:20px 0 0 30%;
+	display: inline-block;
+}
+.Retorna_Menu{
+	width: 180px;
+	margin: 15px auto;
+}
+ .Error_Login{
+width: 400px;							/*CSS ERROR LOGIN*/
+margin: 15% auto;
+background: #f44336c7;
+padding: 40px 30px;
+border-radius: 10px;
+}                  
+
+.Error_Login strong{
+	display: block;
+	color: #100f0fcc;
+	font-size: 1.5em;
+	text-align: center;
+}
+.Error_Login .BotonLogin{
+	margin: 20px auto 0 auto;
+	display: block;
+	width: 160px;
+}
