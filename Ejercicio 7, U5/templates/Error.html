@@ -1,1 +1,12 @@
-
+{%extends "base.html"%}
+{% block title %}ERROR{% endblock %}
+{% block content %}
+    {% if error %}
+   		<div class="Error_Login">
+   			<strong>Error: {{ error }}</strong>
+   			<div class="BotonLogin">
+   				<a href = "{{ url_for('login') }}" class="Boton_Login_Cerrar_Sesion"> Ingresar usuario </a>
+   			</div>
+		</div>
+   	{% endif %}
+{% endblock %}
