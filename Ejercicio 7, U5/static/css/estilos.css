@@ -3,7 +3,7 @@
 	margin:0;}
 body{
 	background-color:#f9f9f9;
-	font-size: 16px; 
+	font-size: 16px;
 	font-family: arial;
 }
 body.Bienvenida{
@@ -13,7 +13,7 @@ font-size: 1.1em;}
 .ContenedorBienvenida {
 	background-color: #ce6542;
 	margin:230px auto;
-	padding: 40px 40px 5px 40px; 
+	padding: 40px 40px 5px 40px;
 	width: 600px;
 	box-sizing: content-box;
 }										 /* CSS BIENVENIDA*/
@@ -21,7 +21,7 @@ font-size: 1.1em;}
 	text-decoration: none;
 	border-radius: 10px;
 	background-color:#39a9a4;
-	padding: 15px 10px;
+	padding: 15px 9px;
 	color: white;
 	font-size: 1.2em;
 	display: inline-block;}
@@ -289,7 +289,7 @@ td{
 	padding: 2px 2px;
 	font-size: 1.2em;
 	border-radius:5px;
-	
+
 }
 
 .ContenedorObservaciones{
@@ -395,7 +395,7 @@ margin: 15% auto;
 background: #f44336c7;
 padding: 40px 30px;
 border-radius: 10px;
-}                  
+}
 
 .Error_Login strong{
 	display: block;
