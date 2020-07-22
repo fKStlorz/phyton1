@@ -1,0 +1,40 @@
+{%extends "base.html"%}
+{% block title %}Visualizar Pedidos{% endblock %}
+{% block content %}
+<div class="ContenedorVisualizarP">
+	 <h1>Pedidos no cobrados </h1>
+	{% if pedidos %}
+	 <table>
+    	     <thead>
+        	    <tr>
+            	   	<th>ID Pedido</th>
+               	   	<th>Items</th>
+                   	<th>Nro Mesa</th>
+                	<th>DNI Mozo</th>
+            	</tr>
+         	</thead>
+        	<tbody>
+	         		{% for pedido in pedidos %}
+	            		{% if pedido.Cobrado == 0 %}
+	               		<tr>
+	                  		<td>{{ pedido.NumPedido }}</td>
+	                   		<td>
+	                   			{% for item in pedido.Item %}
+								              {{ item.NumItem }} - {{prod[item.NumProducto-1].Nombre}} <br>
+	                   			{% endfor %}
+	                   		</td>
+					  		        <td>{{ pedido.Mesa }}</td>
+	                   		<td>{{ pedido.DNIMozo }}</td>
+	               		</tr>
+	            		{% endif %}
+	         		{% endfor %}
+         	</tbody>
+     </table>
+	{% else %}
+	 <h2>No hay pedidos realizados por el momento</h2>
+	{% endif %}
+</div>
+<div class="Retorna_Menu">
+		<a href="{{url_for('Menu_Mozo')}}" class="Boton_Login_Cerrar_Sesion">Regresar al menú</a>
+</div>
+{% endblock %}
