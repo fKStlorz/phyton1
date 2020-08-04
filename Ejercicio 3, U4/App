@@ -1,0 +1,101 @@
+from tkinter import ttk, Tk, StringVar, font
+from tkinter.constants import *
+import requests
+import datetime
+import json
+from pathlib import Path
+
+
+class App:
+    __ventana = None
+    __fechahora = None
+
+    def __init__(self):
+        band = False
+        listaDolares = []
+        try:
+            with Path("fechahora.json").open(encoding="UTF-8") as fuente:
+                d = json.load(fuente)
+                fuente.close()
+            listaDolares = d["datos"]
+        except:
+            complete_url = "https://www.dolarsi.com/api/api.php?type=valoresprincipales"
+            r = requests.get(complete_url)
+            x = r.json()
+            for i in range(len(x)):
+                nb = (x[i]["casa"]["nombre"])
+                if nb.find("Dolar") == 0:
+                    listaDolares.append(x[i])
+            fecha = datetime.date.today()
+            hora = datetime.datetime.today()
+            band = True
+
+        self.__ventana = Tk()
+        self.__ventana.geometry("450x{}".format(67*len(listaDolares)))
+        self.__lista = StringVar()
+        self.__fechahora = StringVar()
+        if band:
+            self.__fechahora.set("{}/{}/{} a la/s {}:{}:{}".format(fecha.day, fecha.month, fecha.year, hora.hour, hora.minute,
+                                                  hora.second))
+        else:
+            self.__fechahora.set(d["FechaHora"])
+        self.__ventana.title("Cotizaciones dolar")
+        fuente1 = font.Font(weight="bold", size=8)
+
+        # creacion
+        self.frame = ttk.Frame(self.__ventana, width=450, height=67*len(listaDolares))
+        self.tipoDolarLb = ttk.Label(self.frame, text="Tipo de dolar", padding=(5, 5))
+        self.compraLb = ttk.Label(self.frame, text="Compra", padding=(5, 5))
+        self.ventaLb = ttk.Label(self.frame, text="Venta", padding=(5, 5))
+        self.actualizaButton = ttk.Button(self.frame, text="Actualizar", command=self.actualizar, padding=(12, 7))
+        self.salirButton = ttk.Button(self.frame, text="Salir", command=self.__ventana.destroy, padding=(12, 7))
+        self.separ1 = ttk.Separator(self.frame, orient=VERTICAL)
+        self.separ2 = ttk.Separator(self.frame, orient=VERTICAL)
+        self.separ3 = ttk.Separator(self.frame, orient=VERTICAL)
+        b = 50
+        for i in range(len(listaDolares)):
+            self.dolaraLb = ttk.Label(self.frame, text=listaDolares[i]["casa"]["nombre"], padding=(5, 5))
+            self.dolarcLb = ttk.Label(self.frame, text=listaDolares[i]["casa"]["compra"], padding=(5, 5))
+            self.dolarvLb = ttk.Label(self.frame, text=listaDolares[i]["casa"]["venta"], padding=(5, 5))
+            self.dolaraLb.place(x=40, y=b)
+            self.dolarcLb.place(x=205, y=b)
+            self.dolarvLb.place(x=305, y=b)
+            b += 45
+
+        self.actu1Lb = ttk.Label(self.frame, text="Ultima actualizacion:", padding=(5, 5), font=fuente1)
+        self.actu2Lb = ttk.Label(self.frame, textvariable=self.__fechahora, padding=(5, 5), font=fuente1)
+
+        # posicionamiento
+        self.frame.place(x=0, y=0)
+        self.tipoDolarLb.place(x=75, y=5)
+        self.compraLb.place(x=210, y=5)
+        self.ventaLb.place(x=320, y=5)
+        self.actualizaButton.place(x=110, y=b+30)
+        self.salirButton.place(x=240, y=b+30)
+        self.separ1.place(x=185, y=10, bordermode=OUTSIDE, height=52*len(listaDolares), width=0)
+        self.separ2.place(x=290, y=10, bordermode=OUTSIDE, height=52*len(listaDolares), width=0)
+        self.separ3.place(x=395, y=10, bordermode=OUTSIDE, height=52*len(listaDolares), width=0)
+        self.actu1Lb.place(x=5, y=b+80)
+        self.actu2Lb.place(x=120, y=b+80)
+        self.__ventana.mainloop()
+
+    def actualizar(self):
+        listaDolares = []
+        complete_url = "https://www.dolarsi.com/api/api.php?type=valoresprincipales"
+        r = requests.get(complete_url)
+        x = r.json()
+        for i in range(len(x)):
+            nb = (x[i]["casa"]["nombre"])
+            if nb.find("Dolar") == 0:
+                listaDolares.append(x[i])
+
+        # guardar y actualizar fecha y hora actual
+        fecha = datetime.date.today()
+        hora = datetime.datetime.today()
+        fechahora = "{}/{}/{} a la/s {}:{}:{}".format(fecha.day, fecha.month, fecha.year, hora.hour, hora.minute,
+                                                      hora.second)
+        d = {"FechaHora": fechahora, "datos": listaDolares}
+        with Path("fechahora.json").open("w", encoding="UTF-8") as destino:
+            json.dump(d, destino, indent=4)
+            destino.close()
+        self.__fechahora.set(fechahora)
